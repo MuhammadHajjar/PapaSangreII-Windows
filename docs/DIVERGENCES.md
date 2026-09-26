@@ -412,9 +412,10 @@ game disagree, work stops and he is asked.
     of "keep moving".
 * **The first private beta's reports** (decision 23, 2026-09-26, the
   tester's list; he asked to keep the shake whoosh):
-  - the Intro's record scratch comes 35.5 s into "You're here because you're
-    dead", right after "Hang on, let me just...", not 36 s (it ended a fifth of
-    a second before "Hmm, that's better"); "Good. Keep going." never talks over
+  - the Intro's record scratch: moved to 35.5 s for a while, back at the
+    original's 36 s since the real cause was found - the port's game clock
+    ran about 6 % slow against the sound (a port bug, fixed in
+    `Game.update`), so every delay came late; "Good. Keep going." never talks over
     "See the stone fountain / that gramophone" (priority 1 under their 2, and
     gone once both are found);
   - ps2_3's sparkler is picked up when you reach it (`ignoreLoop`, as every

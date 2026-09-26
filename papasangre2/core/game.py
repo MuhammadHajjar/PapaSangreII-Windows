@@ -97,6 +97,7 @@ class Game:
         self.pause_text = ''
         self.now = 0.0
         self._tick_acc = 0.0
+        self._clock_acc = 0.0             # wall time not yet spent on a 10 ms step
         self.atmos = []                   # (sound, gain target) of the menu atmosphere
         self._fade = None                 # ('in'|'out', step)
         self._last_ui = None
@@ -292,7 +293,16 @@ class Game:
     # ------------------------------------------------------------ the loop
     def update(self, dt: float) -> None:
         """Advance game time: the 10 ms monitors, the 0.05 s tick, the bus."""
-        steps = max(1, int(round(dt / 0.01))) if dt > 0 else 0
+        # Game time must keep pace with the sound, which runs on the wall
+        # clock.  Rounding each frame to whole 10 ms steps lost the remainder
+        # (a 13 ms frame counted as 10), so game time ran about 6 % slow: 18.7 s
+        # in a 20 s self-test, and every afterDelay fell behind the line it was
+        # timed against - the Intro's record scratch came 2 s late, after
+        # "that's better" instead of before it (the tester's recording).  The
+        # part of a step not yet spent is carried to the next frame.
+        self._clock_acc = getattr(self, '_clock_acc', 0.0) + max(0.0, dt)
+        steps = int((self._clock_acc + 1e-9) / 0.01)
+        self._clock_acc -= steps * 0.01
         for _ in range(steps):
             self.now += 0.01
             self.bus.now = self.now

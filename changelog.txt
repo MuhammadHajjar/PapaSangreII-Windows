@@ -1,5 +1,8 @@
 Changes in Papa Sangre II
 
+2026-09-26 number 5
+Fixed timed events happening later and later in the game, most noticeably the record player in the intro switching off after "that's better" instead of before it.
+
 2026-09-26 number 4
 When a new version is found you now just choose Update now or Not now. Update now downloads it and restarts the game into it by itself, and Not now asks again the next time you start the game.
 

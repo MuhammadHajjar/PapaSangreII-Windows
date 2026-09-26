@@ -27,6 +27,15 @@ def test_versions_are_dates_and_compare_as_dates():
     assert version.current() and version.tag() == version.tag(version.current())
 
 
+def test_the_zip_has_one_name_so_one_link_always_downloads_the_newest():
+    r = updater.Release({'tag_name': '2026-09-27', 'assets': [
+        {'name': 'Papa Sangre II manual.pdf', 'browser_download_url': 'x'},
+        {'name': 'PapaSangreII-Windows.zip', 'browser_download_url': 'u', 'size': 7}]})
+    assert r.asset_url == 'u'
+    assert updater.LATEST_DOWNLOAD == ('https://github.com/MuhammadHajjar/PapaSangreII-Windows'
+                                       '/releases/latest/download/PapaSangreII-Windows.zip')
+
+
 def test_a_release_offers_its_own_zip_and_its_changes():
     r = updater.Release({
         'tag_name': '2026-09-27', 'body': 'Fixed a thing.\nAdded a thing.\n\nThe keys: A and D.',

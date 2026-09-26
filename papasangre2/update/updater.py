@@ -46,8 +46,12 @@ from .remotezip import RemoteZip, RemoteZipError, USER_AGENT
 REPOSITORY = 'MuhammadHajjar/PapaSangreII-Windows'
 LATEST_RELEASE = 'https://api.github.com/repos/%s/releases/latest' % REPOSITORY
 RELEASES_PAGE = 'https://github.com/%s/releases' % REPOSITORY
-#: the release zip's name, before the version: PapaSangreII-Windows-2026-09-26-3.zip
+#: the release zip's name, the same on every release, so one link always
+#: gives the newest: .../releases/latest/download/PapaSangreII-Windows.zip
+ASSET_NAME = 'PapaSangreII-Windows.zip'
+#: what the first releases called it, with the version after a dash
 ASSET_PREFIX = 'PapaSangreII-Windows-'
+LATEST_DOWNLOAD = 'https://github.com/%s/releases/latest/download/%s' % (REPOSITORY, ASSET_NAME)
 GAME_EXE = 'Play Papa Sangre II.exe'
 TIMEOUT = 20
 CHUNK = 1 << 20
@@ -76,7 +80,8 @@ class Release:
         self.asset_url = ''
         self.asset_size = 0
         zips = [a for a in data.get('assets') or () if str(a.get('name', '')).lower().endswith('.zip')]
-        ours = [a for a in zips if str(a.get('name', '')).lower().startswith(ASSET_PREFIX.lower())]
+        ours = [a for a in zips if str(a.get('name', '')).lower() == ASSET_NAME.lower()] or \
+            [a for a in zips if str(a.get('name', '')).lower().startswith(ASSET_PREFIX.lower())]
         pick = ours[0] if ours else (zips[0] if len(zips) == 1 else None)
         if pick is not None:
             self.asset_name = str(pick.get('name'))

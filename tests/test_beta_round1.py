@@ -34,6 +34,8 @@ def _on(sim, name):
 
 # ------------------------------------------------------------------ Intro
 def test_the_record_scratch_comes_after_let_me_just():
+    # the original's 36 s: "let me just..." ends 35.56 s, "Hmm, that's better"
+    # starts 36.76 s (the original, recorded: the scratch 0.57 s after "just")
     sim = Sim('ps2_Intro')
     _on(sim, 'gramophone_loop')
     sim.step(0.5)
@@ -41,8 +43,21 @@ def test_the_record_scratch_comes_after_let_me_just():
     sim.step(40)
     start = _plays(sim, 'INTRO_SPEECH_training_1_SPA')[0]
     scratch = _plays(sim, 'needle_jerk')[0]
-    # "let me just..." ends 35.56 s in, "Hmm, that's better" starts 36.76 s
-    assert 35.4 <= scratch - start <= 35.7
+    assert 35.9 <= scratch - start <= 36.2
+
+
+def test_game_time_keeps_pace_with_the_wall_clock(tmp_path):
+    """Frames that are not whole 10 ms steps must not lose time: rounding
+    each one made game time run 6 % slow, and every delay came late."""
+    from test_game import make_game
+    g = make_game(tmp_path)
+    t0 = g.now
+    for _ in range(1500):                     # 20 s of 13.33 ms frames
+        g.update(0.01333)
+    assert abs((g.now - t0) - 20.0) < 0.02
+    for _ in range(1000):                     # and 10 s of 10.0 ms ones
+        g.update(0.01)
+    assert abs((g.now - t0) - 30.0) < 0.03
 
 
 def _turn_lesson(rate_deg, direction):

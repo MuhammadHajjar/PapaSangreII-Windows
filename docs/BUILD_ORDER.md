@@ -275,8 +275,11 @@ Versions are dates (Muhammad, 2026-09-26): `2026-09-26`, and `2026-09-26 number
 1`, `number 2` when a day has more than one.  The version lives in
 `papasangre2/__init__.py`, `VERSION` and the newest heading of `changelog.txt`
 (a test holds the three together); About reads it first.  The release tag is
-the version without spaces (`2026-09-26-3`) and its zip
-`PapaSangreII-Windows-<tag>.zip`, which is what the self-updater looks for
+the version without spaces (`2026-09-26-5`) and its zip is always
+`PapaSangreII-Windows.zip` (from number 5; numbers 3 and 4 carried the tag in
+the name), so `releases/latest/download/PapaSangreII-Windows.zip` is one link
+that never changes - and the only zip on a release, which is also what builds
+3 and 4 take when no name of theirs matches.  It is what the self-updater looks for
 (`papasangre2/update/updater.py`; `tools/verify_updater.py` proves it
 offline, through the real PowerShell hand-off).  `changelog.txt` ships
 in every release beside the exe - players' words, one line per change, what

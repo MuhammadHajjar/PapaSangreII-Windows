@@ -132,15 +132,9 @@ DROP_TRIGGERS: dict[tuple[str, str], tuple] = {
 #: writes it, field, new value)] - `after_delay` or `after_count`, as the
 #: data's afterDelay / afterCount.
 CHANGED_TRIGGERS: dict[tuple[str, str], list] = {
-    # The record player goes off 36 s into "You're here because you're dead":
-    # the scratch then ends a fifth of a second before "Hmm, that's better"
-    # (36.76 s), and the tester heard the two together.  At 35.5 s it falls
-    # right after "Hang on, let me just..." (ends 35.56 s).
-    ('ps2_Intro', 'intro1'): [
-        ('OnActivate', 'DeactivateAgentWithName:name=gramophone_loop;afterDelay=36',
-         'after_delay', '35.5'),
-        ('OnActivate', 'ActivateAgentWithName:name=needle_jerk;afterDelay=36',
-         'after_delay', '35.5')],
+    # (The Intro's record scratch was moved here to 35.5 s for a while; the
+    # original's 36 s was right all along - the port's game clock ran slow,
+    # core/game.py Game.update, and made every delay late.)
     # The hold music takes 16 shakes, not 8 (afterCount=15 lets the 16th
     # through): the tester found 8 Ctrl presses over too quickly, and the
     # owner chose 16.

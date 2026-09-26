@@ -140,7 +140,7 @@ def make_install(install: str) -> None:
 
 def make_release(serve_dir: str) -> str:
     os.makedirs(serve_dir, exist_ok=True)
-    name = updater.ASSET_PREFIX + NEW_TAG + '.zip'
+    name = updater.ASSET_NAME
     path = os.path.join(serve_dir, name)
     top = 'Papa Sangre II/'
     with zipfile.ZipFile(path, 'w', zipfile.ZIP_DEFLATED) as zf:
@@ -305,7 +305,10 @@ def frozen(old_dir: str, new_zip: str) -> int:
     os.makedirs(serve_dir)
     shutil.copy2(new_zip, serve_dir)
     name = os.path.basename(new_zip)
-    tag = name[len(updater.ASSET_PREFIX):-4]
+    from papasangre2.update import version as _v
+    with zipfile.ZipFile(new_zip) as zf:
+        head = zf.read('Papa Sangre II/changelog.txt').decode('utf-8').splitlines()[2]
+    tag = _v.tag(head)
     server, base = serve(serve_dir)
     Handler.ranges, Handler.served = True, 0
     Handler.api = json.dumps({'tag_name': tag, 'name': 'Test', 'body': 'Test.',

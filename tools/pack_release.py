@@ -91,7 +91,10 @@ def main(argv: list[str]) -> int:
 
     os.makedirs(DIST, exist_ok=True)
     from papasangre2.update import updater, version as build_version
-    out = os.path.join(DIST, f'{updater.ASSET_PREFIX}{build_version.tag(version())}.zip')
+    # one name for every release, so .../releases/latest/download/<name> is
+    # a link that never changes (the version is in the tag and the changelog)
+    out = os.path.join(DIST, updater.ASSET_NAME)
+    print(f'version {build_version.text(version())}, tag {build_version.tag(version())}')
 
     def _tree(root: str):
         """Every file under root, as (absolute, arcname) pairs."""

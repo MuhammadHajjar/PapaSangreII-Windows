@@ -5,7 +5,7 @@ Tests: `tests/test_beta_round1.py`. Divergences: decision 23.
 
 | Report | Cause | Change |
 |---|---|---|
-| L1 record scratch lands on "that's better" | data: needle at 36 s; "let me just..." ends 35.56 s, "Hmm, that's better" starts 36.76 s (word timings, faster-whisper) | `requested.CHANGED_TRIGGERS`: 35.5 s |
+| L1 record scratch lands on "that's better" | PORT BUG: `Game.update` rounded each frame to whole 10 ms steps and dropped the rest, so game time ran ~6 % slow against the wall clock (18.7 s in a 20 s self-test) and every afterDelay fell behind the sound it was timed against: the 36 s scratch came ~2 s late, after "that's better" (tester's side-by-side recording: original scratch 0.57 s after "just", port 2.1 s) | the remainder is carried between frames (20.1 s in 20 s); the scratch is back at the original's 36 s. A first attempt had moved it to 35.5 s (number 2-4) |
 | L1 "keep going" over "see that gramophone" | our decision-21 line, priority 2 like the prompts: it dropped the second landmark or (same pass) overlapped it | priority 1, 0.5 s after the first landmark, `DeallocAgentWithName` when `turn_back_to_me_prompt` activates (both found) |
 | L2 first display case plays the wrong line | our decision-21 `EXTRA_TAKES` made "Smash the case open" a take of the 12 s explanation | reminder once, 8 s after the explanation, cancelled by smashing |
 | L4 sparkler slow to collect | `easter_egg` has no `ignoreLoop`: collects at the end of its 8 s loop (original) | `REQUESTED_DATA ignore_loop` |

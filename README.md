@@ -120,8 +120,11 @@ A version is the day it was made, and "number 2", "number 3" when a day has
 more than one: `2026-09-26 number 3`. It lives in `papasangre2/__init__.py`,
 `VERSION` and the newest heading of `changelog.txt`, and a test keeps the
 three the same. The release tag is the version without spaces,
-`2026-09-26-3`, and its zip is `PapaSangreII-Windows-<tag>.zip`, which is
-what the game looks for when it updates itself. `changelog.txt` ships beside
+`2026-09-26-5`. Every release's zip has the same name,
+`PapaSangreII-Windows.zip`, so
+https://github.com/MuhammadHajjar/PapaSangreII-Windows/releases/latest/download/PapaSangreII-Windows.zip
+always downloads the newest, and it is what the game looks for when it
+updates itself. Keep it the only zip on a release. `changelog.txt` ships beside
 the exe.
 
 ## Layout

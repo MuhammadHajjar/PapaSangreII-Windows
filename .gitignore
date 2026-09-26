@@ -32,3 +32,7 @@ reference/Payload/Papa Sangre II.app/*
 tools/dis/
 tools/ps2_strings.txt
 tools/classdump.txt
+
+# what a self-test run from source writes
+selftest.txt
+selftest-update.txt
