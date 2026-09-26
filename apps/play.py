@@ -300,8 +300,8 @@ def start_update_check(app) -> bool:
         waiting, tag, remove = None, '', []
     if waiting is not None:
         return ask_restart(app, waiting, remove,
-                           f'Version {build_version.text(tag)} was downloaded and is waiting. '
-                           'The game will close, put it in place and start again by itself. '
+                           f'Version {build_version.text(tag)} is downloaded and ready. '
+                           'Updating closes the game, puts it in place and starts it again. '
                            'Your progress is kept.')
     if app.settings.check_updates:
         app.updates.check()
@@ -316,7 +316,7 @@ def poll_quiet_check(app):
     if result is None or result[0] != 'checked':
         return None
     _kind, release, _problem = result
-    if release is None or release.tag == app.settings.get('skippedUpdate'):
+    if release is None:
         return None
     return ('update_found', release)
 
@@ -339,12 +339,8 @@ def offer_update(app, release, asked: bool = False) -> bool:
     act, _ = run_menu(app, update_offer_menu(message))
     if act == 'yes':
         return download_update(app, release)
-    if act == 'skip':
-        app.settings.set('skippedUpdate', release.tag)
-        app.say(f'Version {build_version.text(release.tag)} skipped. It will not be offered '
-                'when the game starts. Check for updates on the main menu still finds it.')
-    elif act == 'no':
-        app.say('It will be offered again the next time you start the game.')
+    if act != 'quit':
+        app.say('Not now. It will be offered again the next time you start the game.')
     return False
 
 
@@ -383,17 +379,21 @@ def download_update(app, release) -> bool:
     if plan is None:
         app.say('Download stopped.' if stopping else 'Nothing needed downloading.')
         return False
-    return ask_restart(app, plan.staging, plan.remove,
-                       f'{updater.size_text(plan.downloaded or plan.download_size)} downloaded. '
-                       'The game will close, put the new version in place and start again by '
-                       'itself. Your progress is kept.')
+    return install_update(app, plan.staging, plan.remove)
 
 
 def ask_restart(app, staging, remove, message: str) -> bool:
+    """An update downloaded earlier: Update now or Not now."""
     act, _ = run_menu(app, update_ready_menu(message))
     if act != 'restart':
-        app.say('The update is ready. It will be offered again the next time you start the game.')
+        if act != 'quit':
+            app.say('Not now. It will be offered again the next time you start the game.')
         return False
+    return install_update(app, staging, remove)
+
+
+def install_update(app, staging, remove) -> bool:
+    """Hand the downloaded files over and quit; the game comes back updated."""
     try:
         updater.apply(staging, remove)
     except updater.UpdateError as exc:
@@ -404,8 +404,7 @@ def ask_restart(app, staging, remove, message: str) -> bool:
 
 
 def check_now(app) -> bool:
-    """Check for updates, from the main menu: answers either way.  A skipped
-    version is offered here - it is how to change your mind."""
+    """Check for updates, from the main menu: answers either way."""
     allowed, why = updater.can_update()
     if not allowed:
         app.say(f'This copy cannot update itself: {why}. It is version {build_version.text()}.')
@@ -751,7 +750,7 @@ def main(rep) -> int:
     if start is not None:
         play(app, start)
     if app.restarting:
-        rep.say('Updating. The game will start again in a moment.')
+        rep.say('Installing the update. The game will start again in a moment.')
         _wait(app, 1.5)
     else:
         rep.say('Goodbye.')

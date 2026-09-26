@@ -41,10 +41,9 @@ DEFAULTS = {
     # default - some players like it, some will not.
     'shakeWhoosh': True,
     # PORT ADDITION (2026-09-26): look for a new version on GitHub when the
-    # game starts; the version the player chose to skip; the version that
-    # ran last (so an update can say it happened).
+    # game starts; the version that ran last (so an update can say it
+    # happened).
     'checkUpdates': True,
-    'skippedUpdate': '',
     'lastVersion': '',
 }
 
@@ -52,7 +51,7 @@ DEFAULTS = {
 TOGGLES = ('blindIntro', 'skipPing', 'skipExplanation', 'pcInstructions', 'shakeWhoosh',
            'checkUpdates')
 #: Settings that are words.
-STRINGS = ('skippedUpdate', 'lastVersion')
+STRINGS = ('lastVersion',)
 
 _RANGES = {
     'turnRateDegreesPerSecond': (MIN_TURN_RATE, MAX_TURN_RATE),

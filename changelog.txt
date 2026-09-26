@@ -1,5 +1,8 @@
 Changes in Papa Sangre II
 
+2026-09-26 number 4
+When a new version is found you now just choose Update now or Not now. Update now downloads it and restarts the game into it by itself, and Not now asks again the next time you start the game.
+
 2026-09-26 number 3
 The extra achievements now have proper names, and pressing Enter on one tells you how to unlock it.
 Added a Shake sound option in Settings, so you can turn off the whoosh you hear when shaking.

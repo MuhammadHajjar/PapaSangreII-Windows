@@ -445,20 +445,22 @@ def about_menu(texts, pc_note: str = '', version: str = '') -> Menu:
 
 
 def update_offer_menu(message: str) -> Menu:
-    """PORT ADDITION: a newer version is on GitHub.  Escape is Not now."""
+    """PORT ADDITION: a newer version is on GitHub.  Two choices and no more
+    (the owner, 2026-09-26): Update now downloads it and restarts into it with
+    nothing further to answer; Not now (and Escape) asks again next start."""
     return Menu('Update available', [
-        MenuItem('Download and install it', 'yes'),
+        MenuItem('Update now', 'yes'),
         MenuItem('Not now', 'no', sound='back_button'),
-        MenuItem('Skip this version', 'skip', sound='back_button'),
     ], intro=message, cancel=MenuItem('Not now', 'no'))
 
 
 def update_ready_menu(message: str) -> Menu:
-    """PORT ADDITION: the update is downloaded; the game has to close to put it in."""
+    """PORT ADDITION: an update downloaded earlier and not yet put in (the game
+    closed before it could restart).  The same two choices."""
     return Menu('Update ready', [
-        MenuItem('Restart now', 'restart'),
-        MenuItem('Later', 'later', sound='back_button'),
-    ], intro=message, cancel=MenuItem('Later', 'later'))
+        MenuItem('Update now', 'restart'),
+        MenuItem('Not now', 'later', sound='back_button'),
+    ], intro=message, cancel=MenuItem('Not now', 'later'))
 
 
 def adios_menu() -> Menu:

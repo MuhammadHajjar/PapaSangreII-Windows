@@ -27,9 +27,10 @@ example when it was started from inside the zip).
 
 The game updates itself. When the main menu opens it looks for a newer
 release on GitHub, and the main menu's **Check for updates** asks straight
-away. Saying yes downloads only the files that changed, then the game closes,
-puts them in place and starts again by itself. Your progress is kept. The
-check at start can be switched off in Settings.
+away. It asks one thing, Update now or Not now. Update now downloads only the
+files that changed, then the game closes, puts them in place and starts again
+by itself; Not now asks again next time. Your progress is kept. The check at
+start can be switched off in Settings.
 
 ## Controls
 

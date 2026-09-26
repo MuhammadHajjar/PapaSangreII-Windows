@@ -223,29 +223,45 @@ def _allow(monkeypatch, applied):
     monkeypatch.setattr(play.updater, 'apply', lambda staging, remove: applied.append((staging, remove)))
 
 
-def test_the_quiet_check_offers_a_new_version_unless_it_was_skipped(tmp_path):
+def test_the_quiet_check_offers_a_new_version(tmp_path):
     app = UpdApp([], [('checked', FakeRelease(), None)], tmp_path)
     app.updates.busy = True
     assert play.poll_quiet_check(app)[0] == 'update_found'
-    app2 = UpdApp([], [('checked', FakeRelease(), None)], tmp_path)
-    app2.updates.busy = True
-    app2.settings.set('skippedUpdate', '2026-12-01')
-    assert play.poll_quiet_check(app2) is None
+    none = UpdApp([], [('checked', None, None)], tmp_path)
+    none.updates.busy = True
+    assert play.poll_quiet_check(none) is None
 
 
-def test_yes_downloads_says_progress_and_restart_applies(tmp_path, monkeypatch):
+def test_the_offer_is_update_now_or_not_now_and_nothing_else():
+    from papasangre2.shell import update_offer_menu, update_ready_menu
+    assert [i.label for i in update_offer_menu('x').items] == ['Update now', 'Not now']
+    assert [i.label for i in update_ready_menu('x').items] == ['Update now', 'Not now']
+    assert update_offer_menu('x').cancel.action == 'no'
+
+
+def test_update_now_downloads_and_restarts_with_nothing_more_to_answer(tmp_path, monkeypatch):
     applied = []
     _allow(monkeypatch, applied)
-    # offer: Enter on "Download and install it"; download: two frames of work, then the plan;
-    # ready: Enter on "Restart now"
+    # Enter on "Update now"; two frames of download, then the plan - and no second question
     app = UpdApp([A.CONFIRM], [None, None, ('installed', FakePlan(), None)], tmp_path)
-    app.frames += [[], [], [], [(A.CONFIRM.value, 'down', 0.0)]]
+    app.frames += [[], [], []]
     monkeypatch.setattr(play, 'PROGRESS_EVERY', 0.0)
     assert play.offer_update(app, FakeRelease()) is True
     said = ' '.join(app.rep.said)
     assert 'Version 2026-12-01 is available' in said and 'Fixed the thing.' in said
-    assert '50 percent' in said and '4 kilobytes downloaded' in said
+    assert '50 percent' in said and 'Update ready' not in said
     assert applied == [('C:/nowhere/staging', ['_internal/old.pyd'])] and app.restarting
+
+
+def test_not_now_asks_again_next_start(tmp_path, monkeypatch):
+    applied = []
+    _allow(monkeypatch, applied)
+    app = UpdApp([A.MENU_DOWN, A.CONFIRM], [], tmp_path)
+    assert play.offer_update(app, FakeRelease()) is False
+    assert not applied and 'offered again the next time' in app.rep.said[-1]
+    esc = UpdApp([A.CANCEL], [], tmp_path)
+    assert play.offer_update(esc, FakeRelease()) is False
+    assert 'offered again the next time' in esc.rep.said[-1]
 
 
 def test_escape_stops_the_download(tmp_path, monkeypatch):
@@ -256,19 +272,15 @@ def test_escape_stops_the_download(tmp_path, monkeypatch):
     assert app.updates.cancelled and 'Download stopped.' in app.rep.said
 
 
-def test_skip_this_version_is_remembered(tmp_path, monkeypatch):
-    _allow(monkeypatch, [])
-    app = UpdApp([A.MENU_DOWN, A.MENU_DOWN, A.CONFIRM], [], tmp_path)
-    assert play.offer_update(app, FakeRelease()) is False
-    assert app.settings.get('skippedUpdate') == '2026-12-01'
-
-
-def test_later_leaves_the_update_waiting(tmp_path, monkeypatch):
+def test_a_downloaded_update_is_offered_the_same_way(tmp_path, monkeypatch):
     applied = []
     _allow(monkeypatch, applied)
-    app = UpdApp([A.MENU_DOWN, A.CONFIRM], [], tmp_path)
-    assert play.ask_restart(app, 'x', [], 'Ready.') is False
-    assert not applied and 'offered again' in app.rep.said[-1]
+    later = UpdApp([A.MENU_DOWN, A.CONFIRM], [], tmp_path)
+    assert play.ask_restart(later, 'x', [], 'Ready.') is False
+    assert not applied and 'offered again' in later.rep.said[-1]
+    now = UpdApp([A.CONFIRM], [], tmp_path)
+    assert play.ask_restart(now, 'x', ['r'], 'Ready.') is True
+    assert applied == [('x', ['r'])] and now.restarting
 
 
 def test_check_for_updates_answers_when_there_is_nothing_new(tmp_path, monkeypatch):

@@ -338,7 +338,9 @@ game disagree, work stops and he is asked.
 * **The game updates itself from its GitHub releases** (2026-09-26, Muhammad:
   "like we did in Audio Defence").  At start (Settings, "Check for updates at
   start", on by default) and from the main menu's Check for updates, the
-  newest release is compared with this build's date version; Yes downloads
+  newest release is compared with this build's date version; the question is
+  Update now or Not now, nothing else (Not now asks again next start); Update
+  now downloads
   only the files whose CRC-32 differs (the release zip's own index, read with
   byte ranges), stages them in `%LOCALAPPDATA%\Papa Sangre II\updates`, and
   a PowerShell hand-off swaps them in after the game quits and starts it
