@@ -1,0 +1,34 @@
+# Generated
+build/
+dist/
+Run/*
+config/
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.DS_Store
+
+# The original game.  The data the port runs on is committed - levels,
+# playlists, sounds, the level list and the About screen's nib - so a clone
+# builds and plays with nothing else to find, and so is the arm64 slice of the
+# binary, which the disassembler reads.  Artwork, fonts, the other nibs, the
+# armv7 slice and the code signature are not: nothing here needs them.
+reference/*
+!reference/PapaSangreII_arm64
+!reference/Payload/
+reference/Payload/*
+!reference/Payload/Papa Sangre II.app/
+reference/Payload/Papa Sangre II.app/*
+!reference/Payload/Papa Sangre II.app/levels/
+!reference/Payload/Papa Sangre II.app/meta/
+!reference/Payload/Papa Sangre II.app/sounds/
+!reference/Payload/Papa Sangre II.app/CreditsViewController.nib
+!reference/Payload/Papa Sangre II.app/*.plist
+
+# Derived from the original binary and regenerable with the scripts in tools/
+# (tools/psdis.py).  The HRTF table is the exception: it is committed, so
+# nobody needs the binary to build.
+tools/dis/
+tools/ps2_strings.txt
+tools/classdump.txt

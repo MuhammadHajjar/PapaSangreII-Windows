@@ -1,0 +1,838 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>ps2_Intro</key>
+	<dict>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_Intro</string>
+		<key>menu_background</key>
+		<string>level_background_1</string>
+		<key>menu_image</key>
+		<string>you_are_dead</string>
+		<key>positionInMenu</key>
+		<integer>1</integer>
+		<key>title</key>
+		<string>You are dead</string>
+		<key>text1</key>
+		<string>Collect the fragments of memory.</string>
+		<key>unlocked</key>
+		<true/>
+		<key>altName</key>
+		<string>You are dead</string>
+		<key>successText</key>
+		<string>Well done, you&apos;ve learnt how to see with your ears.</string>
+	</dict>
+	<key>ps2_1</key>
+	<dict>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_1</string>
+		<key>menu_background</key>
+		<string>level_background_2</string>
+		<key>menu_image</key>
+		<string>mind_the_lice</string>
+		<key>positionInMenu</key>
+		<integer>2</integer>
+		<key>title</key>
+		<string>Mind the Lice</string>
+		<key>unlocked</key>
+		<false/>
+		<key>text1</key>
+		<string>Collect the fragments of memory without being heard by the mindlouse.</string>
+		<key>nextLevel</key>
+		<string>ps2_2</string>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, one of your mindlice just sucked a memory out of my brain!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_1</string>
+			<key>title</key>
+			<string>Dead Can Dance</string>
+			<key>achievedDescription</key>
+			<string>You completed the level without tripping over your feet.</string>
+			<key>unachievedDescription</key>
+			<string>Complete the level without tripping over your feet.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+		<key>text2</key>
+		<string>Go to the second collectible</string>
+		<key>text3</key>
+		<string>Run to the exit</string>
+		<key>altName</key>
+		<string>Mind the Lice</string>
+	</dict>
+	<key>ps2_2</key>
+	<dict>
+		<key>completed</key>
+		<false/>
+		<key>text1</key>
+		<string>Collect the fragments of memory without being heard by the mindlice.</string>
+		<key>fileName</key>
+		<string>ps2_2</string>
+		<key>menu_background</key>
+		<string>level_background_3</string>
+		<key>menu_image</key>
+		<string>mindlice_and_mindlice</string>
+		<key>positionInMenu</key>
+		<integer>3</integer>
+		<key>title</key>
+		<string>Mindlice and Mindlice</string>
+		<key>unlocked</key>
+		<false/>
+		<key>nextLevel</key>
+		<string>ps2_3</string>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, one of your mindlice just sucked a memory out of my brain!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_2</string>
+			<key>title</key>
+			<string>Standing Ovation</string>
+			<key>achievedDescription</key>
+			<string>You clapped 10 times and still evaded the mindlice.</string>
+			<key>unachievedDescription</key>
+			<string>Clap 10 times in front of the mindlice and live to tell the tale.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+		<key>altName</key>
+		<string>Mindlice and Mindlice</string>
+	</dict>
+	<key>ps2_3</key>
+	<dict>
+		<key>text1</key>
+		<string>Collect the fragments of memory without being heard by the mindlouse. Move off noisey floors quickly.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_3</string>
+		<key>menu_background</key>
+		<string>level_background_4</string>
+		<key>menu_image</key>
+		<string>fire_and_ice</string>
+		<key>positionInMenu</key>
+		<integer>4</integer>
+		<key>title</key>
+		<string>Fire and Lice</string>
+		<key>nextLevel</key>
+		<string>ps2_4</string>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, one of your mindlice just sucked a memory out of my brain!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_3</string>
+			<key>title</key>
+			<string>Expert Curator</string>
+			<key>achievedDescription</key>
+			<string>For finding the hidden sparkler in the Museum of Memory, you&apos;re appointed Curator.</string>
+			<key>unachievedDescription</key>
+			<string>Find the hidden exhibit in Papa Sangre&apos;s Museum of Memory.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+		<key>unlocked</key>
+		<false/>
+		<key>altName</key>
+		<string>Fire and Lice</string>
+	</dict>
+	<key>ps2_4</key>
+	<dict>
+		<key>text1</key>
+		<string>Collect the fragments of memory without being heard by the mindlouse.</string>
+		<key>text2</key>
+		<string>Clap to attract the mindlouse away from the door, so you can sneak around to get out.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_4</string>
+		<key>menu_background</key>
+		<string>level_background_5</string>
+		<key>menu_image</key>
+		<string>mottled_dead</string>
+		<key>positionInMenu</key>
+		<integer>5</integer>
+		<key>title</key>
+		<string>Mottled Death and Marbles</string>
+		<key>unlocked</key>
+		<false/>
+		<key>nextLevel</key>
+		<string>ps2_5</string>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, one of your mindlice just sucked a memory out of my brain!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_4</string>
+			<key>title</key>
+			<string>Lifeless Soul of the Party</string>
+			<key>achievedDescription</key>
+			<string>You got out without clapping. Misery guts.</string>
+			<key>unachievedDescription</key>
+			<string>Get out without clapping.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+		<key>altName</key>
+		<string>Mottled Death and Marbles</string>
+	</dict>
+	<key>ps2_5</key>
+	<dict>
+		<key>text1</key>
+		<string>Collect the fragments of memory without falling in the bubbling pools of preserving fluid.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_5</string>
+		<key>menu_background</key>
+		<string>level_background_2</string>
+		<key>menu_image</key>
+		<string>are_you_being_preserved</string>
+		<key>positionInMenu</key>
+		<integer>6</integer>
+		<key>title</key>
+		<string>Are you being Preserved?</string>
+		<key>unlocked</key>
+		<false/>
+		<key>nextLevel</key>
+		<string>ps2_5a</string>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, you should clean your museum, I just died in the preserving lab!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_5</string>
+			<key>title</key>
+			<string>Sports Day of the Dead</string>
+			<key>achievedDescription</key>
+			<string>Such speed! Gold medal in the Sports Day of the Dead.</string>
+			<key>unachievedDescription</key>
+			<string>Find your way through in under 90 seconds.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+		<key>altName</key>
+		<string>Are you being Preserved?</string>
+	</dict>
+	<key>ps2_5a</key>
+	<dict>
+		<key>text1</key>
+		<string>Follow the instructions to get back to the World of the Living.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_5a</string>
+		<key>menu_background</key>
+		<string>level_background_1</string>
+		<key>menu_image</key>
+		<string>home_time</string>
+		<key>positionInMenu</key>
+		<integer>7</integer>
+		<key>title</key>
+		<string>Hometime</string>
+		<key>nextLevel</key>
+		<string>ps2_6</string>
+		<key>unlocked</key>
+		<false/>
+		<key>altName</key>
+		<string>Hometime</string>
+		<key>successText</key>
+		<string>Congratulations, you&apos;ve upset the boss.</string>
+	</dict>
+	<key>ps2_6</key>
+	<dict>
+		<key>completed</key>
+		<false/>
+		<key>text1</key>
+		<string>Get to the duck stand.</string>
+		<key>text2</key>
+		<string>Shoot the ducks using the air rifle in your left hand.</string>
+		<key>fileName</key>
+		<string>ps2_6</string>
+		<key>menu_background</key>
+		<string>level_background_1</string>
+		<key>menu_image</key>
+		<string>ducks_you_are_still_dead</string>
+		<key>positionInMenu</key>
+		<integer>8</integer>
+		<key>title</key>
+		<string>Ducks (You Are Still Dead)</string>
+		<key>unlocked</key>
+		<false/>
+		<key>nextLevel</key>
+		<string>ps2_7</string>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, I was quacked to death by your evil ducks!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_6</string>
+			<key>title</key>
+			<string>Exterminating
+Angel</string>
+			<key>achievedDescription</key>
+			<string>Not a single shot wasted. Here&apos;s your certificate.</string>
+			<key>unachievedDescription</key>
+			<string>Get all the ducks without wasting a single shot.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+		<key>altName</key>
+		<string>Ducks (You Are Still Dead)</string>
+	</dict>
+	<key>ps2_7</key>
+	<dict>
+		<key>text1</key>
+		<string>Get through the burning house without touching the burning walls or getting trapped under falling ceilings. Follow the good cat - not the bad cat.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_7</string>
+		<key>menu_image</key>
+		<string>cat_out_of_hell</string>
+		<key>menu_background</key>
+		<string>level_background_5</string>
+		<key>positionInMenu</key>
+		<integer>9</integer>
+		<key>title</key>
+		<string>Cat out of Hell</string>
+		<key>nextLevel</key>
+		<string>ps2_8</string>
+		<key>unlocked</key>
+		<false/>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, you just got me burned to death!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_7</string>
+			<key>title</key>
+			<string>Fireman</string>
+			<key>achievedDescription</key>
+			<string>What a pro! You escaped the burning house in record time.</string>
+			<key>unachievedDescription</key>
+			<string>Find your way through the burning house in under 140 seconds.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+		<key>altName</key>
+		<string>Cat out of Hell</string>
+	</dict>
+	<key>ps2_8</key>
+	<dict>
+		<key>text1</key>
+		<string>Rescue the dog from the ice without falling through it. Clap when a penguin gets too close to scare it away - but watch out for the polar bear. Follow the bird.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_8</string>
+		<key>menu_background</key>
+		<string>level_background_3</string>
+		<key>menu_image</key>
+		<string>penguin_classics</string>
+		<key>positionInMenu</key>
+		<integer>10</integer>
+		<key>title</key>
+		<string>Penguin Classics</string>
+		<key>unlocked</key>
+		<false/>
+		<key>nextLevel</key>
+		<string>ps2_9</string>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, I just met a very cold end!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_8</string>
+			<key>title</key>
+			<string>Look, Ma!
+No Soul!</string>
+			<key>achievedDescription</key>
+			<string>You kept clear of the penguins without clapping.</string>
+			<key>unachievedDescription</key>
+			<string>Stay ahead of the penguins without clapping.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+		<key>altName</key>
+		<string>Penguin Classics</string>
+	</dict>
+	<key>ps2_9</key>
+	<dict>
+		<key>text1</key>
+		<string>Release the trapped man and follow him to the escape hatch. Watch out for the blasts of radioactive steam - use the geiger counter to tell when you&apos;re in danger.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_9</string>
+		<key>menu_background</key>
+		<string>level_background_4</string>
+		<key>menu_image</key>
+		<string>subatomic</string>
+		<key>positionInMenu</key>
+		<integer>11</integer>
+		<key>title</key>
+		<string>Subatomic Conciousness</string>
+		<key>unlocked</key>
+		<false/>
+		<key>nextLevel</key>
+		<string>ps2_10</string>
+		<key>altName</key>
+		<string>Subatomic Conciousness</string>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, I just had my face burned off with radioactive steam!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_9</string>
+			<key>title</key>
+			<string>Submariner</string>
+			<key>achievedDescription</key>
+			<string>You got out of the submarine in under 2 minutes.</string>
+			<key>unachievedDescription</key>
+			<string>Get out of the submarine in under 2 minutes.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+	</dict>
+	<key>ps2_10</key>
+	<dict>
+		<key>text1</key>
+		<string>Feel your way across the path over the abyss by throwing the glass in your right hand. If you hear it land on stone, you know the way ahead is safe. If it falls into nothingness - don&apos;t walk ahead.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_10</string>
+		<key>menu_background</key>
+		<string>level_background_1</string>
+		<key>menu_image</key>
+		<string>dial_1</string>
+		<key>imageName</key>
+		<string></string>
+		<key>positionInMenu</key>
+		<integer>12</integer>
+		<key>title</key>
+		<string>Dial 1 for Abyss</string>
+		<key>nextLevel</key>
+		<string>ps2_11a</string>
+		<key>unlocked</key>
+		<false/>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, I couldn&apos;t find my way through your abyss!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_10</string>
+			<key>title</key>
+			<string>Environmental Awareness Certificate</string>
+			<key>achievedDescription</key>
+			<string>You crossed the abyss throwing less than 20 bits of glass.</string>
+			<key>unachievedDescription</key>
+			<string>Get across the abyss throwing less than 20 bits of glass.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+		<key>altName</key>
+		<string>Dial 1 for Abyss</string>
+	</dict>
+	<key>ps2_11a</key>
+	<dict>
+		<key>text1</key>
+		<string>Someone&apos;s in trouble...</string>
+		<key>text2</key>
+		<string>Go to the fountain to collect the water pistol.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_11a</string>
+		<key>menu_background</key>
+		<string>level_background_5</string>
+		<key>menu_image</key>
+		<string>death_becomes_you</string>
+		<key>positionInMenu</key>
+		<integer>13</integer>
+		<key>title</key>
+		<string>Death becomes you</string>
+		<key>unlocked</key>
+		<false/>
+		<key>nextLevel</key>
+		<string>ps2_11b</string>
+		<key>altName</key>
+		<string>Death becomes you</string>
+		<key>successText</key>
+		<string>Well done, you got the water pistol. Now to stand up for yourself...</string>
+	</dict>
+	<key>ps2_11b</key>
+	<dict>
+		<key>text1</key>
+		<string>Retrieve the memories. Shoot the Forgotten Men - the water pistol&apos;s in your left hand.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_11b</string>
+		<key>menu_background</key>
+		<string>level_background_4</string>
+		<key>menu_image</key>
+		<string>papas_zoo</string>
+		<key>positionInMenu</key>
+		<integer>14</integer>
+		<key>unlocked</key>
+		<false/>
+		<key>nextLevel</key>
+		<string>ps2_13</string>
+		<key>title</key>
+		<string>Papa&apos;s Zoo</string>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, your forgotten men just tore my mind to pieces!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_11b</string>
+			<key>title</key>
+			<string>King of the Jungle</string>
+			<key>achievedDescription</key>
+			<string>All the forgotten men dispatched without wasting a single shot. Well done!</string>
+			<key>unachievedDescription</key>
+			<string>Kill all the forgotten men without wasting a single shot.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+		<key>altName</key>
+		<string>Papa&apos;s Zoo</string>
+	</dict>
+	<key>ps2_13</key>
+	<dict>
+		<key>text1</key>
+		<string>Swim to the bubbles to stay alive. Smash the memories as you go.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_13</string>
+		<key>menu_background</key>
+		<string>level_background_2</string>
+		<key>menu_image</key>
+		<string>soul_diving</string>
+		<key>positionInMenu</key>
+		<integer>15</integer>
+		<key>nextLevel</key>
+		<string>ps2_12</string>
+		<key>title</key>
+		<string>Soul Diving</string>
+		<key>unlocked</key>
+		<false/>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, I just drowned in the dark!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_13</string>
+			<key>title</key>
+			<string>10,000 Leagues Under the Living </string>
+			<key>achievedDescription</key>
+			<string>You found the treasure on the seabed.</string>
+			<key>unachievedDescription</key>
+			<string>Find the hidden treasure on the seabed.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+		<key>altName</key>
+		<string>Soul Diving</string>
+	</dict>
+	<key>ps2_12</key>
+	<dict>
+		<key>text1</key>
+		<string>Get to the train.</string>
+		<key>text2</key>
+		<string>Shoot the ducks using the air rifle in your left hand.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_12</string>
+		<key>menu_background</key>
+		<string>level_background_3</string>
+		<key>menu_image</key>
+		<string>rolling_shot</string>
+		<key>positionInMenu</key>
+		<integer>16</integer>
+		<key>title</key>
+		<string>Rolling Shot</string>
+		<key>unlocked</key>
+		<false/>
+		<key>nextLevel</key>
+		<string>ps2_14</string>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, I was quacked to death by your evil ducks!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_12</string>
+			<key>title</key>
+			<string>Bang Bang, You&apos;re Dead!</string>
+			<key>achievedDescription</key>
+			<string>All the ducks dispatched without wasting a single shot.</string>
+			<key>unachievedDescription</key>
+			<string>Get all the ducks without wasting a single shot.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+		<key>altName</key>
+		<string>Rolling Shot</string>
+	</dict>
+	<key>ps2_14</key>
+	<dict>
+		<key>text1</key>
+		<string>You&apos;re back in the burning house. Feel your way through by throwing sand ahead of you. Use the extinguisher to get close enough to the memory fragments to destroy them.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_14</string>
+		<key>menu_background</key>
+		<string>level_background_5</string>
+		<key>menu_image</key>
+		<string>extinguish</string>
+		<key>positionInMenu</key>
+		<integer>17</integer>
+		<key>nextLevel</key>
+		<string>ps2_15</string>
+		<key>title</key>
+		<string>Extinguish</string>
+		<key>unlocked</key>
+		<false/>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, you just got me burned to death!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_14</string>
+			<key>title</key>
+			<string>Help the Aged</string>
+			<key>achievedDescription</key>
+			<string>You saved old Mr Fletcher.</string>
+			<key>unachievedDescription</key>
+			<string>Save old Mr Fletcher and leave the house safely.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+		<key>altName</key>
+		<string>Extinguish</string>
+	</dict>
+	<key>ps2_15</key>
+	<dict>
+		<key>text1</key>
+		<string>Kill the polar bears with the dagger in your right hand to destroy the memory fragments. Clap to scare off the penguins if they get too close, or you&apos;ll fall through the ice.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_15</string>
+		<key>menu_background</key>
+		<string>level_background_1</string>
+		<key>menu_image</key>
+		<string>ice_hunt</string>
+		<key>positionInMenu</key>
+		<integer>18</integer>
+		<key>nextLevel</key>
+		<string>ps2_16</string>
+		<key>title</key>
+		<string>Ice Hunt</string>
+		<key>unlocked</key>
+		<false/>
+		<key>altName</key>
+		<string>Ice Hunt</string>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, I just met a very cold end!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_15</string>
+			<key>title</key>
+			<string>Penguin Hater</string>
+			<key>achievedDescription</key>
+			<string>You killed 10 penguins - have this I HATE PENGUINS t-shirt.</string>
+			<key>unachievedDescription</key>
+			<string>Kill 10 penguins and live to tell the tale.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+	</dict>
+	<key>ps2_16</key>
+	<dict>
+		<key>text1</key>
+		<string>Destroy the memory fragments. Hide the sound of your footsteps by only moving under cover of thunder.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_16</string>
+		<key>menu_background</key>
+		<string>level_background_3</string>
+		<key>menu_image</key>
+		<string>thunderhogs</string>
+		<key>positionInMenu</key>
+		<integer>19</integer>
+		<key>title</key>
+		<string>Thunderhogs</string>
+		<key>nextLevel</key>
+		<string>ps2_17</string>
+		<key>unlocked</key>
+		<false/>
+		<key>altName</key>
+		<string>Thunderhogs</string>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, don&apos;t you think snufflehogs are a little bit old school?</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_16</string>
+			<key>title</key>
+			<string>Storm Chaser</string>
+			<key>achievedDescription</key>
+			<string>You hid all your steps under the cover of thunder. Well done!</string>
+			<key>unachievedDescription</key>
+			<string>Hide every step you take under the cover of thunder.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+	</dict>
+	<key>ps2_17</key>
+	<dict>
+		<key>text1</key>
+		<string>Make your way through the husks of the memories you&apos;ve destroyed.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_17</string>
+		<key>menu_background</key>
+		<string>level_background_2</string>
+		<key>menu_image</key>
+		<string>husks</string>
+		<key>positionInMenu</key>
+		<integer>20</integer>
+		<key>title</key>
+		<string>Husks</string>
+		<key>nextLevel</key>
+		<string>ps2_18</string>
+		<key>unlocked</key>
+		<false/>
+		<key>altName</key>
+		<string>Husks</string>
+		<key>twitter_death_text</key>
+		<string>Damn you @papasangre, I couldn&apos;t handle all the broken memories you threw at me!</string>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_17</string>
+			<key>title</key>
+			<string>Memory Racer</string>
+			<key>achievedDescription</key>
+			<string>You worked your way through the husks of memories in under 4 minutes.</string>
+			<key>unachievedDescription</key>
+			<string>Work your way through the husks of memories in under 4 minutes.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+	</dict>
+	<key>ps2_18</key>
+	<dict>
+		<key>text1</key>
+		<string>Collect your hold music. Shoot Papa&apos;s forces using the water pistol in your left hand. DON&apos;T stop running.</string>
+		<key>text2</key>
+		<string>Get close enough to Papa to take his photo with the camera in your right hand.</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_18</string>
+		<key>menu_background</key>
+		<string>level_background_4</string>
+		<key>menu_image</key>
+		<string>paparazzi</string>
+		<key>positionInMenu</key>
+		<integer>21</integer>
+		<key>cannotSkip</key>
+		<true/>
+		<key>title</key>
+		<string>Paparazzi</string>
+		<key>unlocked</key>
+		<false/>
+		<key>achievement</key>
+		<dict>
+			<key>id</key>
+			<string>level_18</string>
+			<key>title</key>
+			<string>Filmthrift</string>
+			<key>achievedDescription</key>
+			<string>You destroyed Papa Sangre with only three clicks of your camera.</string>
+			<key>unachievedDescription</key>
+			<string>Film is expensive, don&apos;t take more than three photos.</string>
+			<key>facebookShareText</key>
+			<string>Placeholder text for sharing an achievement on Facebook</string>
+			<key>twitterShareText</key>
+			<string>Placeholder text for sharing an achievement on Twitter</string>
+		</dict>
+		<key>altName</key>
+		<string>Paparazzi</string>
+		<key>twitter_death_text</key>
+		<string>Arg! Thwarted at the last hurdle by @papasangre!</string>
+	</dict>
+	<key>ps2_18b</key>
+	<dict>
+		<key>text1</key>
+		<string>You&apos;re almost free to go back to the World of the Living...</string>
+		<key>completed</key>
+		<false/>
+		<key>fileName</key>
+		<string>ps2_18b</string>
+		<key>menu_background</key>
+		<string>level_background_5</string>
+		<key>menu_image</key>
+		<string>unplugged</string>
+		<key>positionInMenu</key>
+		<integer>22</integer>
+		<key>title</key>
+		<string>Unplugged</string>
+		<key>unlocked</key>
+		<false/>
+		<key>altName</key>
+		<string>Unplugged</string>
+	</dict>
+</dict>
+</plist>

@@ -1,0 +1,29 @@
+Changes in Papa Sangre II
+
+2026-09-26 number 3
+The extra achievements now have proper names, and pressing Enter on one tells you how to unlock it.
+Added a Shake sound option in Settings, so you can turn off the whoosh you hear when shaking.
+The game can now update itself. It checks for a new version when it starts, and you can check yourself from the main menu. The check at start can be turned off in Settings.
+
+2026-09-26 number 2
+The record player in the intro now gets switched off at the right moment, before "that's better".
+"Good, keep going" no longer talks over the fountain and gramophone lines while you turn around in the intro.
+The first display case in Mind the Lice always explains itself now, and you get a reminder if you wait too long to smash it.
+The sparkler in Fire and Lice is picked up as soon as you reach it.
+In Hometime, the scene carries on straight away when you reach the gramophone player.
+You can now hear yourself scrambling out of the holes in Cat out of Hell.
+The explosion when the submarine loses power no longer pans.
+Fixed the fire walls in Extinguish jumping behind you after you put out the first one.
+The burning oil can in Extinguish is easier to hit with the extinguisher.
+The house in Extinguish now comes down right behind you, so you actually have to run.
+The jump prompt in Ice Hunt doesn't repeat as often.
+You can't walk around while the camera is being explained in Paparazzi.
+The hold music in Unplugged is quieter, and it takes more shaking to destroy it.
+The warnings for tripping and walking into walls only play in the first two levels now.
+The hints you get for standing still only play once.
+Your first steps after stopping no longer sound like running.
+Choosing a level from the level list now clicks.
+The About screen can be read line by line with the arrow keys.
+
+2026-09-26 number 1
+First version.
