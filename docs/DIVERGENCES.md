@@ -392,8 +392,9 @@ game disagree, work stops and he is asked.
   fire; all are wired in (`world/requested.py`, `tools/unused_speech.py`):
   - the idle hints: after 30 s without a step, while you may walk and nobody
     is talking (the original's clock stays at +inf), each once per attempt
-    (decision 23); levels 9 and 10 get the hints recorded for them, level 18
-    its (level 11b's) shooting hint, level 14 none (its data names level 7's);
+    (decision 23); levels 9 and 10 get the hints recorded for them, level 14
+    none (its data names level 7's), and level 18 none either (its data names
+    level 11b's shooting hint, which the owner had taken out, 2026-09-27);
   - the wall and trip lines count per level (the first two of each) in the
     Intro and ps2_1 only (decision 23) - the original counts over the whole
     game, so they were over after the Intro;

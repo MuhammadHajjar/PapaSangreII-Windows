@@ -204,9 +204,9 @@ def test_the_levels_without_hints_get_theirs():
     assert Sim('ps2_9').level.inactivity_sounds == ['9_SPEECH_hint']
     assert Sim('ps2_10').level.inactivity_sounds == ['10_SPEECH_hint']
     assert Sim('ps2_14').level.inactivity_sounds == []       # its data named level 7's
-    s = Sim('ps2_18')
-    assert s.level.inactivity_sounds == ['11b_SPEECH_hint_shooting']
-    assert s.bank.sound('11b_SPEECH_hint_shooting') is not None
+    # ps2_18's data names Papa's Zoo's shooting hint; the owner had it taken out
+    assert Sim('ps2_18').level.inactivity_sounds == []
+    assert Sim('ps2_11b').level.inactivity_sounds == ['11b_SPEECH_hint_shooting']
 
 
 # ---------------------------------------------------------- level lines

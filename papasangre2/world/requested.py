@@ -164,17 +164,19 @@ RENAMES: dict[tuple[str, str], str] = {
 #: Idle hints (the level's `inactivitySounds`) for levels whose data has none
 #: though the line was recorded for them.  ps2_14's data names level 7's hint
 #: (the cat, the burning house) - a copy from level 7, and not loaded there -
-#: so it has none.
+#: so it has none.  ps2_18's data names level 11b's ("Collect the memories,
+#: killing all the forgotten men... water pistol"), which is Papa's Zoo's and
+#: wrong for Paparazzi - the owner had it taken out there (2026-09-27).
 INACTIVITY: dict[str, str | None] = {
     'ps2_9': '9_SPEECH_hint',
     'ps2_10': '10_SPEECH_hint',
     'ps2_14': None,
+    'ps2_18': None,
 }
 
 #: Lines a level names but its playlists do not load: name -> file in the
 #: bundle, loaded into that level's bank.
 ENSURE: dict[str, dict[str, str]] = {
-    'ps2_18': {'11b_SPEECH_hint_shooting': 'sounds/ps2_11b/11b_SPEECH_hint_shooting.m4a'},
     'ps2_5a': {'INTRO_SPEECH_prompt_no_walk_SPA_UOS':
                'sounds/ps2_Intro/INTRO_SPEECH_prompt_no_walk_SPA_UOS.m4a'},
     'ps2_11a': {'INTRO_SPEECH_prompt_no_walk_SPA_UOS':

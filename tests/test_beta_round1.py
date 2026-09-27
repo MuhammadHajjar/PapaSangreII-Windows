@@ -358,3 +358,10 @@ def test_face_the_music_is_said_once_however_long_you_wait():
     sim.run_until(lambda: a.active and a.sound is not None, limit=5)
     sim.step(a.sound.duration + 90.0)
     assert len(_plays(sim, 'INTRO_SPEECH_training_1a_prompt')) == 1
+
+
+def test_paparazzi_has_no_idle_hint_from_papas_zoo():
+    sim = Sim('ps2_18')
+    sim.bus.post('PGE_MESSAGE_EnableWalk', {})
+    sim.step(120.0)
+    assert not _plays(sim, '11b_SPEECH_hint_shooting')

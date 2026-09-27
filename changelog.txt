@@ -1,6 +1,9 @@
 Changes in Papa Sangre II
 
-2026-09-27
+2026-09-27 number 2
+Removed the hint about shooting the forgotten men from Paparazzi. It belongs to Papa's Zoo.
+
+2026-09-27 number 1
 The museum music behind the last door of the first level now comes from the door, and you can hear it from anywhere in the garden.
 "Face the music" in the first level is only said once now, instead of over and over until you turn.
 
