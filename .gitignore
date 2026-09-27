@@ -36,3 +36,6 @@ tools/classdump.txt
 # what a self-test run from source writes
 selftest.txt
 selftest-update.txt
+
+# tools/build_openal_mac.sh fetches and builds OpenAL Soft here
+vendor/build-openal/

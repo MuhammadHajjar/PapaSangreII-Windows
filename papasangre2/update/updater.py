@@ -158,6 +158,9 @@ def can_update() -> tuple:
     """(allowed, why not, as a sentence ending the player's announcement)."""
     if not paths.FROZEN:
         return False, 'this is the source version, which updates with git'
+    if sys.platform == 'darwin':
+        return False, ('the Mac version does not update by itself yet. '
+                       'Download the newest from the releases page on GitHub')
     if os.name != 'nt':
         return False, 'updating by itself only works on Windows'
     if paths.running_from_throwaway():

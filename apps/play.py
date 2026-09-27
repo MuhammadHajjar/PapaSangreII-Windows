@@ -5,7 +5,7 @@ Opens with the Papa Engine sting, then a spoken main menu.  Up and down move,
 Enter chooses, Escape goes back, left and right change a setting.  Escape
 during play pauses; nothing on the keyboard quits the game but Quit.
 
-Controls (all rebindable in Settings, or in config\\keys.json):
+Controls (all rebindable in Settings, or in config/keys.json):
 
   A / D          left foot / right foot - alternate them to walk
   A and D        together: jump
@@ -19,7 +19,8 @@ Controls (all rebindable in Settings, or in config\\keys.json):
   Page up/down   volume
   Escape         pause
 
-Built as ``Play Papa Sangre II.exe``.  Headphones on.
+Built as ``Play Papa Sangre II.exe`` on Windows and ``Play Papa Sangre II.app``
+on the Mac.  Headphones on.
 """
 
 from __future__ import annotations
@@ -55,7 +56,7 @@ from papasangre2.shell import (PAD_REBINDABLE, REBINDABLE,         # noqa: E402
 from papasangre2.tutorial import pc_lines, pc_about               # noqa: E402
 from papasangre2.update import updater, version as build_version  # noqa: E402
 from papasangre2.update.service import UpdateService               # noqa: E402
-from papasangre2.util import console, paths, sysaudio             # noqa: E402
+from papasangre2.util import console, host, paths, sysaudio       # noqa: E402
 from papasangre2.util.settings import Settings                     # noqa: E402
 
 FRAME_HZ = 100
@@ -730,7 +731,7 @@ def main(rep) -> int:
         app.engine.close()
         pygame.quit()
         return code
-    rep.show('Papa Sangre II - Windows port')
+    rep.show('Papa Sangre II - ' + host.PORT_NAME + ' port')
     rep.show('=' * 46)
     app = App(rep)
     rep.show(f'output device : {console.ascii_safe(app.engine.device_name)}')

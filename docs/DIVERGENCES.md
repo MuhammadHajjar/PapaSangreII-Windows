@@ -306,7 +306,7 @@ game disagree, work stops and he is asked.
 * Settings adds sound volume, turning speed, the three switches above, keys
   and controller buttons (all carried over from the PS1 port but the
   switches).
-* The pause screen adds **Quit to Windows** below the original's four.
+* The pause screen adds **Quit to Windows** (**Quit to macOS** on the Mac) below the original's four.
 * **The skip explanation is always the spoken take** (decision 11,
   2026-09-24). With Blind intro off the original plays `ps2_skip_tuto`, 0.57 s
   of silence, so sighted players were never told about the skip sound. With
