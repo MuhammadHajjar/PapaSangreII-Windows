@@ -23,9 +23,12 @@ AGENTS: dict[str, list] = {
         ('Sound', 'intro1a_timer', 70.0, -38.0,
          {'active': False, 'collideRadius': 0.0},
          [('OnActivate', 'ActivateAgentWithName:name=intro1a_prompt;afterDelay=8')]),
+        # Once, not on a loop: the tester heard it repeat for as long as he
+        # waited (2026-09-27), and the owner's rule for hints is once.
         ('Sound', 'intro1a_prompt', 70.0, -38.0,
-         {'active': False, 'gain': 1.8, 'looping': True, 'skippable': False,
-          'soundList': 'INTRO_SPEECH_training_1a_prompt_SPA_UOS', 'spatialized': True}, []),
+         {'active': False, 'gain': 1.8, 'looping': False, 'skippable': False,
+          'soundList': 'INTRO_SPEECH_training_1a_prompt_SPA_UOS', 'spatialized': True},
+         [('OnSoundEnd', 'DeactivateAgentWithName:name=intro1a_prompt')]),
         # "Good. Keep going." - half a second after the first "see the fountain
         # / gramophone" of the 360-degree turn, when there is more to turn.
         # Priority 1, under the prompts' 2: it never starts over one of them,

@@ -82,6 +82,16 @@ REQUESTED_DATA = {
     # the hold music: at the data's gain 1 it was as loud as the voice over it
     # (measured: 0.035 a channel against 0.034); 6 dB under it
     ('ps2_18b', 'music'): {'gain': 0.5},
+    # The museum music behind the Intro's last door (INTRO_door_closed_loop_SPA)
+    # played flat, in your head: its data never says spatialized, and the
+    # original's default is NO - so it did there too.  The owner and the tester
+    # (2026-09-27): it must come from the door, and be heard from anywhere in
+    # the garden, since it is how you find your way there.  Placed, then, at
+    # gain 36 with a ceiling of 5 after distance (rendered: ahead of you it is
+    # 0.029 a channel up close, 0.025 at 200 px, 0.016 at 400 px - a voice line
+    # is 0.05; the data's gain 7 under OpenAL's usual ceiling of 1 would have
+    # been 0.005 everywhere).
+    ('ps2_Intro', 'door_closed'): {'spatialized': True, 'final_gain': 36.0, 'max_gain': 5.0},
 }
 
 AGENT_CLASSES = {

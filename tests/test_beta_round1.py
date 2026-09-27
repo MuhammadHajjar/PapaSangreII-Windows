@@ -330,3 +330,31 @@ def test_a_knifed_penguin_in_level_20_keeps_the_swing_with_the_crunch():
     played = [n for t, w, n in sim.log[n0:] if w == 'play']
     assert 'requested_penguin_death_stab' in played and 'beatsound' in played
     assert not pen.active and sim.level.agent('penguin2').active
+
+
+# ------------------------------------------------------------ 2026-09-27
+def test_the_museum_music_comes_from_the_door_and_carries():
+    sim = Sim('ps2_Intro')
+    _on(sim, 'door_closed')
+    sim.step(2.0)
+    door = sim.level.agent('door_closed')
+    s = door.sound
+    assert s is not None and s.spatialized
+    assert tuple(s.planar[:2]) == tuple(door.position)
+    assert s.max_gain == 5.0 and abs(s.gain - 36.0) < 0.5      # faded in to its final gain
+
+
+def test_other_sounds_keep_the_usual_ceiling():
+    sim = Sim('ps2_Intro')
+    _on(sim, 'gramophone_loop')
+    sim.step(0.5)
+    assert sim.level.agent('gramophone_loop').sound.max_gain == 1.0
+
+
+def test_face_the_music_is_said_once_however_long_you_wait():
+    sim = Sim('ps2_Intro')
+    _on(sim, 'intro1a')
+    a = sim.level.agent('intro1a')
+    sim.run_until(lambda: a.active and a.sound is not None, limit=5)
+    sim.step(a.sound.duration + 90.0)
+    assert len(_plays(sim, 'INTRO_SPEECH_training_1a_prompt')) == 1

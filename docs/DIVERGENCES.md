@@ -410,6 +410,13 @@ game disagree, work stops and he is asked.
     explanation, so half the time the case went unexplained - decision 23);
   - other takes of a line join it: ps2_14's "Smash it!", ps2_18's second set
     of "keep moving".
+* **The Intro's museum music comes from the door** (2026-09-27, the owner and
+  the tester): `door_closed` has no `spatialized` key and PGESound's default is
+  NO (`-[PGESound init]` 0x10003296c sets none), so the original played it in
+  your head.  Placed at the door, gain 36 under a ceiling of 5 after distance
+  (`max_gain`, OpenAL's AL_MAX_GAIN, 1 for every other sound), so it carries
+  across the garden.  And "Face the music..." (decision 21's reminder) is said
+  once, not looped.
 * **The first private beta's reports** (decision 23, 2026-09-26, the
   tester's list; he asked to keep the shake whoosh):
   - the Intro's record scratch: moved to 35.5 s for a while, back at the

@@ -1,5 +1,9 @@
 Changes in Papa Sangre II
 
+2026-09-27
+The museum music behind the last door of the first level now comes from the door, and you can hear it from anywhere in the garden.
+"Face the music" in the first level is only said once now, instead of over and over until you turn.
+
 2026-09-26 number 5
 Fixed timed events happening later and later in the game, most noticeably the record player in the intro switching off after "that's better" instead of before it.
 

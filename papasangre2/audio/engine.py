@@ -262,7 +262,7 @@ class Sound:
     __slots__ = ('engine', 'spec', 'name', 'buffer', 'source', '_gain',
                  '_looping', '_spatialized', '_planar', 'duration',
                  '_send_to_reverb', '_wet_gain', '_channels', '_started',
-                 '_dry_gain', 'reverb_mix', '_bufs', '_plain_mono')
+                 '_dry_gain', 'reverb_mix', '_bufs', '_plain_mono', '_max_gain')
 
     def __init__(self, engine: 'AudioEngine', spec: SoundSpec,
                  buffer_id: int, duration: float, channels: int):
@@ -285,6 +285,10 @@ class Sound:
         self._wet_gain = 0.0
         self._started = False
         self._dry_gain = 1.0
+        #: OpenAL's AL_MAX_GAIN: the ceiling on the gain after distance
+        #: attenuation.  1.0 is OpenAL's own default and the original's
+        #: effective ceiling; only a REQUESTED sound raises it.
+        self._max_gain = 1.0
         #: ``setupReverbParameters:``'s automatic reverb mix - a dict with
         #: ``auto_mix``, ``min_distance``, ``max_distance``, ``min_wet_send``
         #: and ``max_wet_send`` - or None.  See :meth:`_auto_mix`.
@@ -302,6 +306,7 @@ class Sound:
             self._apply_rolloff()
             al.alSourcef(self.source, OA.AL_MAX_DISTANCE,
                          self.engine.max_distance)
+            al.alSourcef(self.source, OA.AL_MAX_GAIN, self._max_gain)
             self._apply_direct_channels()
             self._apply_position()
             self._apply_mix()
@@ -323,6 +328,16 @@ class Sound:
     def gain(self, v: float) -> None:
         self._gain = float(v)
         self._apply_mix()
+
+    @property
+    def max_gain(self) -> float:
+        return self._max_gain
+
+    @max_gain.setter
+    def max_gain(self, v: float) -> None:
+        self._max_gain = max(0.0, float(v))
+        if self.source is not None:
+            self.engine.al.alSourcef(self.source, OA.AL_MAX_GAIN, self._max_gain)
 
     @property
     def dry_gain(self) -> float:

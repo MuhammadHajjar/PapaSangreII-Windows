@@ -61,6 +61,9 @@ class SoundAgent(GameAgent):
         #: (0 = the original's back-to-back loop).
         self.repeat_gap = 0.0
         self._generation = 0
+        #: REQUESTED: the ceiling on the gain after distance (OpenAL's
+        #: AL_MAX_GAIN; 1.0, the original's, unless world/level.py raises it)
+        self.max_gain = 1.0
         super().__init__(bus, world, obj, rng)
         self.unpausable = True                    # init: setUnpausable:
         bus.subscribe('PGE_INPUT_DoubleTap', self._on_double_tap)
@@ -169,6 +172,7 @@ class SoundAgent(GameAgent):
         if self.spatialized:
             self.update_spatialized_sound()
         s.gain = self.gain
+        s.max_gain = self.max_gain            # the sound object is shared: always set
         self._generation += 1
         play(s, self.looping and not self.repeat_gap)
         step = 0.0
