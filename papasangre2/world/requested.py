@@ -110,7 +110,13 @@ TRIGGERS: dict[tuple[str, str], list] = {
     # are told how to use it (the data leaves walking on through the scene).
     # A dropped or skipped camera line ends it too, so it cannot trap you.
     ('ps2_18', 'memory3'): [
-        ('OnCollect', 'PGE_MESSAGE_DisableWalk')],
+        ('OnCollect', 'PGE_MESSAGE_DisableWalk'),
+        # "Keep moving! Get that memory!" is said by the four shout floors after
+        # 8 s standing still, and the data only switches off the first floor's
+        # at the last memory - so it went on after every memory was taken, and
+        # interrupted the camera and the end (a player's report, 2026-09-27).
+        # Taking the last memory retires the line.
+        ('OnCollect', 'DeallocAgentWithName:name=keep_moving')],
     ('ps2_18', 'camera_prompt'): [
         ('OnSoundEnd', 'PGE_MESSAGE_EnableWalk')],
     # "Quick, move!" - after the first two memories are smashed, as the third

@@ -259,8 +259,10 @@ def keys_menu(keymap) -> Menu:
     return Menu('Keys', items)
 
 
-#: The pad's list.  Turning is missing on purpose: it is the left stick.
-PAD_REBINDABLE = tuple(r for r in REBINDABLE if r[0] not in ('turn_left', 'turn_right'))
+#: The pad's list: everything, turning included.  The left stick always turns;
+#: turning can also be put on buttons (a player's request, 2026-09-27), and
+#: is unbound by default.
+PAD_REBINDABLE = REBINDABLE
 
 
 def pad_menu(padmap) -> Menu:
@@ -405,7 +407,9 @@ def achievements_menu(entries, progress) -> Menu:
                               'info', sound=None))
     for ident in GAME_CENTER_ONLY:
         pct = progress.game_center_percent(ident) if progress is not None else 0.0
-        state = 'achieved' if pct >= 100.0 else f'not achieved, {pct:.0f} percent'
+        # rounded down: 498 kills is 99.6, and "not achieved, 100 percent"
+        # read as a contradiction (a player's report, 2026-09-27)
+        state = 'achieved' if pct >= 100.0 else f'not achieved, {int(pct)} percent'
         items.append(MenuItem(f'{GAME_CENTER_NAMES[ident]}, {state}', 'explain',
                               game_center_help(ident, entries), sound=None))
     items.append(MenuItem('Main menu', 'back'))

@@ -95,7 +95,7 @@ DEFAULT_PAD_BINDINGS: dict[str, list[str]] = {
     Action.MENU_DOWN.value:       ['dpdown'],
     Action.MENU_LEFT.value:       ['dpleft'],
     Action.MENU_RIGHT.value:      ['dpright'],
-    Action.TURN_LEFT.value:       [],     # the left stick turns; see gamepad.py
+    Action.TURN_LEFT.value:       [],     # the left stick turns (gamepad.py); buttons may too
     Action.TURN_RIGHT.value:      [],
 }
 

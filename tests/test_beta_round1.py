@@ -365,3 +365,55 @@ def test_paparazzi_has_no_idle_hint_from_papas_zoo():
     sim.bus.post('PGE_MESSAGE_EnableWalk', {})
     sim.step(120.0)
     assert not _plays(sim, '11b_SPEECH_hint_shooting')
+
+
+def test_keep_moving_stops_once_the_last_memory_is_taken():
+    sim = Sim('ps2_18')
+    sim.bus.post('PGE_MESSAGE_EnableWalk', {})
+    m = sim.level.agent('memory3')
+    _on(sim, 'memory3')
+    sim.run_until(lambda: m.active, limit=5)
+    m.collect()
+    sim.step(1.0)
+    # stand still on a shout floor, where the data would still say it
+    sim.bus.post('PGE_MESSAGE_MovePlayerToPosition', {'position': (-120.0, -140.0)})
+    sim.step(0.2)
+    n = len(_plays(sim, '18_SPEECH_keep_moving')) + len(_plays(sim, '18_SPEECH__keep_moving'))
+    sim.step(40.0)
+    after = len(_plays(sim, '18_SPEECH_keep_moving')) + len(_plays(sim, '18_SPEECH__keep_moving'))
+    assert after == n
+
+
+def test_keep_moving_still_nags_before_the_last_memory():
+    sim = Sim('ps2_18')
+    sim.bus.post('PGE_MESSAGE_EnableWalk', {})
+    sim.bus.post('PGE_MESSAGE_MovePlayerToPosition', {'position': (-120.0, -140.0)})
+    sim.step(0.2)
+    sim.foot('L')
+    sim.step(20.0)
+    assert _plays(sim, '18_SPEECH_keep_moving') or _plays(sim, '18_SPEECH__keep_moving')
+
+
+def test_a_nearly_earned_achievement_never_says_100_percent():
+    from papasangre2.assets.hublist import load_hub_list
+    from papasangre2.save.progress import InMemoryProgress
+    from papasangre2.shell import achievements_menu
+    from papasangre2.util import paths
+    p = InMemoryProgress()
+    p.total_kills = 498                                   # 99.6 percent of 500
+    labels = [i.label for i in achievements_menu(load_hub_list(paths.game_bundle()), p).items]
+    assert '500 kills, not achieved, 99 percent' in labels
+    p.total_kills = 500
+    labels = [i.label for i in achievements_menu(load_hub_list(paths.game_bundle()), p).items]
+    assert '500 kills, achieved' in labels
+
+
+def test_turning_can_be_put_on_controller_buttons():
+    from papasangre2.input.padmap import PadMap
+    from papasangre2.shell.menu import pad_menu
+    pm = PadMap()
+    labels = [i.label for i in pad_menu(pm).items]
+    assert 'Turn left: unbound' in labels and 'Turn right: unbound' in labels
+    pm.bind('turn_left', ['leftshoulder'])
+    assert pm.actions_for('leftshoulder')[0] in ('turn_left', 'hand_left')
+    assert 'turn_left' in pm.actions_for('leftshoulder')

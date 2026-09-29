@@ -117,10 +117,17 @@ def pc_lines(keymap, padmap=None, pad_connected=lambda: False) -> dict:
     def b(a):
         return buttons(padmap, a)
 
+    def pad_turn():
+        on_buttons = padmap.buttons_for(A.TURN_LEFT) and padmap.buttons_for(A.TURN_RIGHT)
+        if on_buttons:
+            return (f'push the left stick left or right, or hold {b(A.TURN_LEFT)} '
+                    f'or {b(A.TURN_RIGHT)}.')
+        return 'push the left stick left or right.'
+
     def turning():
         return (f'On this computer, turn with {k(A.TURN_LEFT)} and {k(A.TURN_RIGHT)}; '
                 'hold one down to keep turning.'
-                + pad('push the left stick left or right.'))
+                + pad(pad_turn))
 
     def walking():
         return (f'On this computer, your feet are {k(A.FOOT_LEFT)} and {k(A.FOOT_RIGHT)}. '
