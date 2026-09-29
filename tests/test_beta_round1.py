@@ -220,6 +220,74 @@ def test_the_oil_can_can_be_sprayed_from_the_distance_its_data_gives():
     assert can.is_in_beating_range
 
 
+def _ready_to_walk(sim):
+    sim.run_until(lambda: sim.interpreter.player_can_use_hands, limit=120)
+    sim.bus.post('PGE_MESSAGE_EnableWalk', {})
+    sim.bus.post('PGE_MESSAGE_EnableHands', {})
+    sim.step(1.0)
+
+
+def _died(sim, since):
+    return [n for t, what, n in sim.log if t >= since and what == 'play' and 'ondeath' in n]
+
+
+def test_the_oil_can_stays_out_once_it_is_put_out():
+    # the owner's report (2026-09-29): sprayed from its north tripwire, the can
+    # came back when he walked on over the tripwires he had not crossed yet -
+    # its burst, no warning, then the explosion ran him down
+    sim = Sim('ps2_14', seed=1)
+    _ready_to_walk(sim)
+    can = sim.level.agent('can')
+    _move_to(sim, 71.0, 52.0)                                # north tripwire only
+    sim.step(9.0)
+    _face(sim, *can.position)
+    sim.step(0.2)
+    assert can.is_in_beating_range
+    sim.hand('L')
+    stab = sim.now
+    sim.step(6.0)
+    assert _plays(sim, '7_steam_put_out_firework') and _plays(sim, 'can_extinguished')
+    assert not [n for t, w, n in sim.log if w == 'stop' and t < stab + 3.7
+                and n.startswith('7_steam_put_out_firework')]   # the steam is heard out
+    for x, y in ((70.0, 70.0), (70.0, 90.0), (70.0, 40.0), (70.0, 70.0)):
+        _move_to(sim, x, y)                                  # the middle, the south wire...
+        sim.step(20.0)
+    assert [t for t in _plays(sim, '14_firework_intro') if t > stab] == []
+    assert [t for t in _plays(sim, 'can_extinguisher') if t > stab] == []
+    assert not _plays(sim, 'vat_of_oil_explosions') and not _died(sim, stab)
+
+
+def test_the_oil_can_left_burning_still_blows_up():
+    sim = Sim('ps2_14', seed=1)
+    _ready_to_walk(sim)
+    t0 = sim.now
+    _move_to(sim, 71.0, 52.0)
+    _move_to(sim, 70.0, 70.0)
+    sim.step(30.0)
+    assert _plays(sim, 'can_extinguisher') and _plays(sim, 'vat_of_oil_explosions')
+    assert _died(sim, t0) == ['14_ondeath_explode_UOS']
+
+
+def test_the_second_oil_fire_stays_out_once_it_is_put_out():
+    sim = Sim('ps2_14', seed=1)
+    _ready_to_walk(sim)
+    _move_to(sim, 148.0, -70.0)                              # its middle tripwire
+    sim.step(6.0)
+    _face(sim, 127.0, -60.0)
+    for _ in range(6):
+        sim.shake()
+        sim.step(0.4)
+    out = sim.now
+    sim.step(4.0)
+    assert _plays(sim, '7_steam_put_out_firework') and _plays(sim, 'oncollect_go_to_exit')
+    for x, y in ((130.0, -62.0), (148.0, -70.0), (164.0, -62.0), (148.0, -70.0)):
+        _move_to(sim, x, y)                                  # west wire, east wire...
+        sim.step(20.0)
+    assert [t for t in _plays(sim, '14_firework') if t > out] == []
+    assert [t for t in _plays(sim, 'shake_extinguisher_2') if t > out] == []
+    assert not _plays(sim, 'vat_of_oil_explosions') and not _died(sim, out)
+
+
 def test_the_house_comes_down_after_you_from_the_start():
     sim = Sim('ps2_14')
     sim.bus.post('PGE_MESSAGE_EnableWalk', {})

@@ -119,6 +119,36 @@ TRIGGERS: dict[tuple[str, str], list] = {
         ('OnCollect', 'DeallocAgentWithName:name=keep_moving')],
     ('ps2_18', 'camera_prompt'): [
         ('OnSoundEnd', 'PGE_MESSAGE_EnableWalk')],
+    # Oil that is put out stays out (the owner's report, 2026-09-29).  Each oil
+    # fire is lit by several tripwires, and a tripwire fires the first time you
+    # step on it - so one you had not crossed yet lit the oil again after you
+    # had put it out: the can, already dead, gave its first burst and nothing
+    # more (-[PGEEnemy activate] 0x10001edcc plays the intro with no dead
+    # check), "Can of oil's caught alight!" was dropped under "Well done..."
+    # (priority 2 under 4), and 12 s later the explosion ran you down with no
+    # way to put it out.  The original does the same; the port's 80 px reach
+    # (decision 23) let you spray the can before crossing its middle tripwire,
+    # so it happened far more often.  The second oil fire ("More oil!") had the
+    # same trap: relit, it could not be put out again (firework_put_off is
+    # never switched off, so it cannot fire twice).
+    ('ps2_14', 'can'): [
+        ('OnStab', 'DeallocAgentWithName:name=warning_can'),
+        ('OnStab', 'DeallocAgentWithName:name=can_explode'),
+        ('OnBeatenSoundEnd', 'DeallocAgentWithName:name=can')],
+    ('ps2_14', 'can_explode'): [
+        ('OnStab', 'DeallocAgentWithName:name=warning_can'),
+        ('OnStab', 'DeallocAgentWithName:name=can'),
+        ('OnBeatenSoundEnd', 'DeallocAgentWithName:name=can_explode')],
+    ('ps2_14', 'firework_put_off'): [
+        ('OnActivate', 'DeallocAgentWithName:name=firework_intro'),
+        ('OnActivate', 'DeallocAgentWithName:name=firework_1'),
+        ('OnActivate', 'DeallocAgentWithName:name=warning_firework'),
+        ('OnActivate', 'DeallocAgentWithName:name=can_explode2')],
+    ('ps2_14', 'can_explode2'): [
+        ('OnStab', 'DeallocAgentWithName:name=firework_intro'),
+        ('OnStab', 'DeallocAgentWithName:name=firework_1'),
+        ('OnStab', 'DeallocAgentWithName:name=warning_firework'),
+        ('OnBeatenSoundEnd', 'DeallocAgentWithName:name=can_explode2')],
     # "Quick, move!" - after the first two memories are smashed, as the third
     # has its "Last one, quick!" (16_SPEECH_oncollect_final, a second after).
     ('ps2_16', 'memory1'): [

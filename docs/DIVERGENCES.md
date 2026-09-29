@@ -418,6 +418,29 @@ game disagree, work stops and he is asked.
   (`max_gain`, OpenAL's AL_MAX_GAIN, 1 for every other sound), so it carries
   across the garden.  And "Face the music..." (decision 21's reminder) is said
   once, not looped.
+* **Oil you put out stays out** (ps2_14, 2026-09-29, the owner's report).  Each
+  oil fire is lit by several tripwires, and a tripwire fires only the first
+  time you step on it (`triggerOnEnter:` 0x1000448cc), so one you had not
+  crossed yet lit the oil again after you had put it out.  The can, dead
+  already, gave its first burst (`-[PGEEnemy activate]` 0x10001edcc plays the
+  intro with no dead check) and nothing more; "Can of oil's caught alight!" was
+  dropped under "Well done..." (priority 2 under 4) so only its end fired, and
+  12 s later the explosion ran you down, heard for under a second.  The second
+  oil fire ("More oil!") relit the same way and could not be put out again
+  (`firework_put_off` is never switched off, so it cannot fire twice).  The
+  original does all of this; the port's longer reach on the can (decision 23)
+  let you spray it before crossing its middle tripwire, so it happened far more
+  often.  Now putting out either one, or its explosion, removes it and its
+  warning for the rest of the level (`world/requested.py`, DeallocAgentWithName).
+  Left burning, both still blow up on you as before.
+* **Paparazzi's "Keep moving! Get that memory!" ends with the last memory**
+  (2026-09-27, a player's report): four floors say it after 8 s standing still,
+  and the data only switches off the first floor's at the last memory, so it
+  went on through the camera scene and the end.  Taking the last memory
+  retires it.
+* **Turning can go on controller buttons** (2026-09-27, a player's request):
+  Turn left and Turn right are in the Controller buttons list, unbound unless
+  you set them; the left stick still turns.
 * **The first private beta's reports** (decision 23, 2026-09-26, the
   tester's list; he asked to keep the shake whoosh):
   - the Intro's record scratch: moved to 35.5 s for a while, back at the

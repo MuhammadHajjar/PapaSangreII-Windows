@@ -1,5 +1,8 @@
 Changes in Papa Sangre II
 
+2026-09-29
+In Extinguish, oil you have put out stays out. Walking back past it could set it off again with no sound, and then it blew up on you.
+
 2026-09-27 number 3
 Turning can now be put on controller buttons, in Settings, Controller buttons. The left stick still turns.
 In Paparazzi, "Keep moving, get that memory" no longer plays after you have collected every memory.
