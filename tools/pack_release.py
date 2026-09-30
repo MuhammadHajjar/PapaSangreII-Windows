@@ -6,6 +6,13 @@ Takes ``Run/`` and makes the one archive that gets handed to someone else:
 "Papa Sangre II".  Diagnostic tools, config, recordings and save files all
 stay behind.
 
+On a Mac it is ``Play Papa Sangre II.app`` and ``changelog.txt``, zipped with
+``ditto``: the bundle holds symlinks (its Frameworks point into Resources),
+which Python's zipfile would store as copies, and a sealed bundle whose files
+have moved no longer opens.  The Mac zip has its own name,
+``PapaSangreII-Mac.zip``, so it can sit on the same release as the Windows
+one without the Windows updater ever mistaking it for its own.
+
     python tools/pack_release.py
 """
 
@@ -13,19 +20,26 @@ from __future__ import annotations
 
 import hashlib
 import os
+import shutil
+import subprocess
 import sys
+import tempfile
 import zipfile
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
 
+from papasangre2.util import host                               # noqa: E402
+
 RUN = os.path.join(ROOT, 'Run')
 DIST = os.path.join(ROOT, 'dist')
 
-GAME = 'Play Papa Sangre II.exe'
+GAME = 'Play Papa Sangre II.app' if host.MAC else 'Play Papa Sangre II.exe'
 
 #: The release, in full.
-ALWAYS = (GAME, '_internal', 'changelog.txt')
+ALWAYS = (GAME, 'changelog.txt') if host.MAC else (GAME, '_internal', 'changelog.txt')
+#: The Mac release's zip, beside the Windows one on the same release.
+MAC_ASSET_NAME = 'PapaSangreII-Mac.zip'
 #: The one folder the zip holds.
 TOP = 'Papa Sangre II'
 
@@ -93,8 +107,10 @@ def main(argv: list[str]) -> int:
     from papasangre2.update import updater, version as build_version
     # one name for every release, so .../releases/latest/download/<name> is
     # a link that never changes (the version is in the tag and the changelog)
-    out = os.path.join(DIST, updater.ASSET_NAME)
+    out = os.path.join(DIST, MAC_ASSET_NAME if host.MAC else updater.ASSET_NAME)
     print(f'version {build_version.text(version())}, tag {build_version.tag(version())}')
+    if host.MAC:
+        return pack_mac(files, out)
 
     def _tree(root: str):
         """Every file under root, as (absolute, arcname) pairs."""
@@ -123,6 +139,27 @@ def main(argv: list[str]) -> int:
     print(f'\n{out}')
     print(f'  {count} files, {total / 1e6:.0f} MB in, '
           f'{packed / 1e6:.0f} MB packed')
+    print(f'  sha256 {digest}')
+    return 0
+
+
+def pack_mac(files: list[tuple[str, str]], out: str) -> int:
+    """The Mac zip: the same one folder, made by ditto so the bundle survives."""
+    with tempfile.TemporaryDirectory() as tmp:
+        top = os.path.join(tmp, TOP)
+        os.makedirs(top)
+        for path, name in files:
+            if os.path.isdir(path):
+                shutil.copytree(path, os.path.join(top, name), symlinks=True)
+            else:
+                shutil.copy2(path, os.path.join(top, name))
+        if os.path.exists(out):
+            os.remove(out)
+        subprocess.run(['ditto', '-c', '-k', '--sequesterRsrc', '--keepParent', top, out],
+                       check=True)
+    digest = hashlib.sha256(open(out, 'rb').read()).hexdigest()
+    print(f'\n{out}')
+    print(f'  {os.path.getsize(out) / 1e6:.0f} MB packed')
     print(f'  sha256 {digest}')
     return 0
 

@@ -1,6 +1,7 @@
-# Papa Sangre II - Windows port
+# Papa Sangre II - Windows and macOS port
 
-A faithful port of *Papa Sangre II* (Somethin' Else, iOS, 2013) to Windows:
+A faithful port of *Papa Sangre II* (Somethin' Else, iOS, 2013) to Windows and
+macOS:
 the audio-only horror sequel, played entirely by listening. All 22 levels, the
 combat, the puzzles and the camera; keyboard and controller; screen-reader
 output; and the original's own HRTF.
@@ -25,12 +26,18 @@ Your progress and settings are written to a `config` folder next to the exe
 (or to `%LOCALAPPDATA%\Papa Sangre II` when the game cannot write there, for
 example when it was started from inside the zip).
 
-The game updates itself. When the main menu opens it looks for a newer
+On a Mac, unzip `PapaSangreII-Mac.zip` and open `Play Papa Sangre II.app`
+from the "Papa Sangre II" folder (the first time, right-click it and choose
+Open: the app is not notarised). Speech is VoiceOver. Progress and settings
+are in `~/Library/Application Support/Papa Sangre II/config`.
+
+On Windows the game updates itself. When the main menu opens it looks for a newer
 release on GitHub, and the main menu's **Check for updates** asks straight
 away. It asks one thing, Update now or Not now. Update now downloads only the
 files that changed, then the game closes, puts them in place and starts again
 by itself; Not now asks again next time. Your progress is kept. The check at
-start can be switched off in Settings.
+start can be switched off in Settings. The Mac build does not update itself
+yet: download the new zip from the releases page.
 
 ## Controls
 
@@ -66,8 +73,8 @@ Controller, rebindable in Settings, Controller buttons:
 | B, or Back | back |
 | Start | pause menu |
 
-Nothing on the keyboard or the pad quits the game: that is Alt+F4, or Quit in
-a menu.
+Nothing on the keyboard or the pad quits the game: that is Alt+F4 on Windows,
+Cmd+Q on the Mac, or Quit in a menu.
 
 ## Building
 
@@ -75,20 +82,30 @@ Everything the game runs on is in here: the audio, the Tiled map exports, the
 S3D playlists, the level list, the About screen's texts and the HRTF table.
 Clone it and build, there is nothing else to find.
 
-    python tools/build_exes.py play   the game, into Run\ (exe, _internal, changelog)
+    python tools/build_exes.py play   the game, into Run/ (exe, _internal, changelog)
     python tools/build_exes.py        the game and the diagnostic tools
-    python tools/pack_release.py      the release zip, into dist\
+    python tools/pack_release.py      the release zip, into dist/
+
+Each builds for the platform it runs on. On a Mac the game is
+`Play Papa Sangre II.app`, the same folder build as a bundle, and the release
+zip is `PapaSangreII-Mac.zip`; build it on a Mac and put it on the same
+release as the Windows zip.
 
 The game is a folder build (PyInstaller one-dir): the exe starts in under two
 seconds, and every sound, level and playlist travels inside the exe as one
 encrypted pack, embedded as a Windows resource, so there are no loose game
-files and no path long enough to trouble Windows.
+files and no path long enough to trouble Windows. A Mac executable has no
+resources, so there the same pack sits inside the .app as `gamedata.pak`.
 
 The HRTF is not committed in its built form: `build/` is generated. The
 committed `tools/embedded_hrtf.dat` is the original IRCAM 1050 set, carved out
 of the binary by `tools/extract_hrtf.py`, and `build_exes.py` rebuilds
 `build/hrtf/papa_ircam_1050.mhr` from it on a fresh clone with
-`vendor/makemhr/makemhr.exe` (from OpenAL Soft's binary release).
+`vendor/makemhr/makemhr.exe` (from OpenAL Soft's binary release), or on a Mac
+`vendor/makemhr-mac/makemhr`. The Mac's OpenAL Soft (`vendor/openal-mac`) and
+makemhr are the same 1.25.2, built for Apple silicon by
+`tools/build_openal_mac.sh` and committed; run it again to build for an Intel
+Mac.
 
 The original's arm64 binary is here too, at `reference/PapaSangreII_arm64`.
 Nothing needs it to build or play, but it is the source of truth for the
@@ -105,9 +122,10 @@ the notes and checking them.
 
 ## Running from source
 
-Python 3.12+, `pygame-ce`, `numpy`, `av`, and OpenAL Soft (`vendor/openal`).
-Speech goes through the NVDA controller client when NVDA is running, SAPI 5
-otherwise.
+Python 3.12+, `pygame-ce`, `numpy`, `av`, `pyobjc-framework-cocoa` on the
+Mac, and OpenAL Soft (`vendor/openal`, `vendor/openal-mac`). Speech goes
+through the NVDA controller client when NVDA is running, SAPI 5 otherwise; on
+the Mac, through VoiceOver.
 
     python apps/play.py               the game
     python apps/play.py ps2_14        straight into one level
@@ -120,11 +138,12 @@ A version is the day it was made, and "number 2", "number 3" when a day has
 more than one: `2026-09-26 number 3`. It lives in `papasangre2/__init__.py`,
 `VERSION` and the newest heading of `changelog.txt`, and a test keeps the
 three the same. The release tag is the version without spaces,
-`2026-09-26-5`. Every release's zip has the same name,
+`2026-09-26-5`. Every release's Windows zip has the same name,
 `PapaSangreII-Windows.zip`, so
 https://github.com/MuhammadHajjar/PapaSangreII-Windows/releases/latest/download/PapaSangreII-Windows.zip
 always downloads the newest, and it is what the game looks for when it
-updates itself. Keep it the only zip on a release. `changelog.txt` ships beside
+updates itself. The only other zip a release may carry is the Mac's,
+`PapaSangreII-Mac.zip`, which the updater never takes for its own. `changelog.txt` ships beside
 the exe.
 
 ## Layout
@@ -142,7 +161,7 @@ the exe.
         update/     the self-updater
         accessibility/  speech
     requested/      the two sounds made for the port (a knifed penguin, a trip on glass)
-    tests/          392 tests, pytest
+    tests/          403 tests, pytest
     tools/          build, packaging, reverse-engineering and audit scripts
     docs/           the journal, the divergences, the notes
 

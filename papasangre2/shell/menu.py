@@ -33,6 +33,7 @@ with Enter or A, and leave with Escape or B; left and right change a setting.
 from __future__ import annotations
 
 from ..assets.hublist import load_hub_list
+from ..util import host
 from ..util.settings import MAX_TURN_RATE, MIN_TURN_RATE
 
 
@@ -282,7 +283,7 @@ def pause_menu(objective: str = '') -> Menu:
         MenuItem('Restart Level', 'restart'),
         MenuItem('Settings', 'settings'),
         MenuItem('Quit game', 'main'),
-        MenuItem('Quit to Windows', 'quit'),
+        MenuItem('Quit to macOS' if host.MAC else 'Quit to Windows', 'quit'),
     ], intro=objective, cancel=MenuItem('Continue game', 'resume'))  # Escape = resumeGame:
 
 

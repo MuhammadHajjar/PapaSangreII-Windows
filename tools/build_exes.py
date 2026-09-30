@@ -1,9 +1,10 @@
-"""Build the standalone, double-clickable applications.
+"""Build the standalone, double-clickable applications, for the platform it runs on.
 
 Everything the project hands over is an exe - no terminal, no Python, no paths
 to type.  Each app in ``apps/`` is frozen by PyInstaller into a one-file exe in
 ``Run/``, carrying its own OpenAL Soft, the NVDA controller client, the
-recovered HRTF and whatever game data it needs:
+recovered HRTF and whatever game data it needs (on the Mac the same, without
+the ``.exe``, and with no NVDA client: speech there is VoiceOver):
 
     Check game content.exe      the level data, playlists and a sound index
     Verify spatial audio.exe    nothing but the HRTF
@@ -18,6 +19,13 @@ one encrypted pack embedded in the exe as a Windows resource
 ``_internal`` folder, next to the player's ``config``.  The three tools stay
 one-file exes.
 
+On the Mac the game is ``Play Papa Sangre II.app``, the same folder build
+wrapped as a bundle, with the pack as ``gamedata.pak`` inside it (a Mac
+executable has no resources to embed it in).  It goes into ``Run/`` beside
+``changelog.txt``.  The Mac's OpenAL Soft and makemhr are committed in
+``vendor/openal-mac`` and ``vendor/makemhr-mac`` (``tools/build_openal_mac.sh``
+rebuilds them).
+
 Run:  python tools/build_exes.py            (all apps)
       python tools/build_exes.py content    (one app, by key)
 """
@@ -25,6 +33,7 @@ Run:  python tools/build_exes.py            (all apps)
 from __future__ import annotations
 
 import os
+import plistlib
 import shutil
 import subprocess
 import sys
@@ -32,6 +41,8 @@ import time
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.insert(0, ROOT)
+
+from papasangre2.util import host                               # noqa: E402
 
 APPS = os.path.join(ROOT, 'apps')
 #: Where the exes go.  PS2_DIST puts them elsewhere - for building while the
@@ -41,12 +52,24 @@ WORK = os.path.join(ROOT, 'build', 'pyinstaller')
 BUNDLE = os.path.join(ROOT, 'reference', 'Payload', 'Papa Sangre II.app')
 HRTF_DIR = os.path.join(ROOT, 'build', 'hrtf')
 HRTF = os.path.join(HRTF_DIR, 'papa_ircam_1050.mhr')
-OPENAL = os.path.join(ROOT, 'vendor', 'openal', 'soft_oal.dll')
-MAKEMHR = os.path.join(ROOT, 'vendor', 'makemhr', 'makemhr.exe')
+if host.MAC:
+    OPENAL = os.path.join(ROOT, 'vendor', 'openal-mac', 'libopenal.dylib')
+    MAKEMHR = os.path.join(ROOT, 'vendor', 'makemhr-mac', 'makemhr')
+else:
+    OPENAL = os.path.join(ROOT, 'vendor', 'openal', 'soft_oal.dll')
+    MAKEMHR = os.path.join(ROOT, 'vendor', 'makemhr', 'makemhr.exe')
 NVDA_DIR = os.path.join(ROOT, 'vendor', 'nvda')
+
+#: PyInstaller's src;dest separator: ';' on Windows, ':' everywhere else.
+SEP = ';' if host.WINDOWS else ':'
 
 #: The game, as the player receives it.
 GAME_NAME = 'Play Papa Sangre II'
+#: What the game is on disk: the exe, or on the Mac the .app bundle.
+GAME_FILE = GAME_NAME + ('.app' if host.MAC else '.exe')
+#: The Mac bundle's reverse-DNS identity (PyInstaller's default is the bare
+#: app name, spaces and all), which LaunchServices and Spotlight key on.
+BUNDLE_ID = 'com.papasangre2.port'
 #: The game data pack, embedded in the game's exe.
 PACK = os.path.join(ROOT, 'build', 'gamedata.pak')
 GAME_DIST = os.path.join(ROOT, 'build', 'dist_game')
@@ -61,6 +84,18 @@ def version() -> str:
             return fh.read().strip() or '0.0.0'
     except OSError:
         return '0.0.0'
+
+
+def bundle_version() -> str:
+    """The version as a Mac bundle wants it: dotted integers.
+
+    '2026-09-26 number 5' -> '2026.9.26.5'; a day's first build is number 1.
+    """
+    from papasangre2.update.version import parse                  # noqa: PLC0415
+    parts = parse(version())
+    if len(parts) < 3:
+        return '0.0.0'
+    return '.'.join(str(n) for n in parts[:3] + (parts[3] if len(parts) > 3 else 1,))
 
 
 def prepare_hrtf() -> str:
@@ -81,7 +116,8 @@ def prepare_hrtf() -> str:
     subprocess.run([sys.executable, os.path.join(ROOT, 'tools', 'extract_hrtf.py')],
                    cwd=ROOT, check=True)
     if not os.path.exists(MAKEMHR):
-        raise SystemExit(f'missing makemhr: {MAKEMHR} (ships in the openal-soft binary zip)')
+        raise SystemExit(f'missing makemhr: {MAKEMHR} (Windows: ships in the openal-soft '
+                         'binary zip; Mac: tools/build_openal_mac.sh builds it)')
     # -e off: no diffuse-field equalisation.  The original convolves the raw
     # IRCAM responses; makemhr's default equalises them, which changes the
     # interaural level differences (measured: 15 dB at 90 degrees instead of
@@ -185,10 +221,13 @@ def build(key: str) -> str:
     hrtf = prepare_hrtf()
 
     data: list[tuple[str, str]] = [(hrtf, 'hrtf')]
-    for name in ('nvdaControllerClient64.dll', 'nvdaControllerClient32.dll'):
-        p = os.path.join(NVDA_DIR, name)
-        if os.path.exists(p):
-            data.append((p, 'nvda'))
+    # Speech on the Mac is VoiceOver, part of the system; the pyobjc bridge to
+    # it is inside the frozen Python.  Only Windows carries a speech DLL.
+    if host.WINDOWS:
+        for name in ('nvdaControllerClient64.dll', 'nvdaControllerClient32.dll'):
+            p = os.path.join(NVDA_DIR, name)
+            if os.path.exists(p):
+                data.append((p, 'nvda'))
     for src, dest in extra:
         if not os.path.exists(src):
             raise SystemExit(f'missing bundled data: {src}')
@@ -196,7 +235,8 @@ def build(key: str) -> str:
 
     # The game is built windowed: a console beside a released game is noise,
     # and everything that matters is spoken.  The diagnostic tools keep their
-    # console, which is the whole point of them.
+    # console, which is the whole point of them.  On the Mac --windowed is
+    # also what makes PyInstaller produce a .app bundle.
     game = exe_name == GAME_NAME
     windowed = game
     cmd = [
@@ -208,30 +248,42 @@ def build(key: str) -> str:
         '--distpath', GAME_DIST if game else RUN,
         '--workpath', WORK,
         '--specpath', WORK,
-        '--add-binary', f'{OPENAL};.',
+        '--add-binary', f'{OPENAL}{SEP}.',
         '--hidden-import', 'papasangre2',
         '--paths', ROOT,
     ]
     for src, dest in data:
-        cmd += ['--add-data', f'{src};{dest}']
-    if game:
+        cmd += ['--add-data', f'{src}{SEP}{dest}']
+    if game and host.MAC:
+        # beside the frozen modules, where pack.auto_mount looks for it
+        cmd += ['--add-data', f'{PACK}{SEP}.', '--osx-bundle-identifier', BUNDLE_ID]
+    elif game:
         cmd += ['--resource', f'{PACK},PS2PACK,GAMEDATA,0']
+    if host.MAC:
+        # pyobjc resolves its frameworks lazily enough that the analyser cannot
+        # always see them; the VoiceOver bridge needs both inside the build.
+        cmd += ['--hidden-import', 'Foundation', '--hidden-import', 'AppKit']
     cmd.append(script_path)
 
-    print(f'\n=== building {exe_name}.exe ===', flush=True)
+    kind = GAME_FILE[len(GAME_NAME):] if game else ('.exe' if host.WINDOWS else '')
+    print(f'\n=== building {exe_name}{kind} ===', flush=True)
     t0 = time.perf_counter()
     proc = subprocess.run(cmd, cwd=ROOT, capture_output=True, text=True)
     if proc.returncode != 0:
         sys.stdout.write(proc.stdout[-4000:])
         sys.stderr.write(proc.stderr[-4000:])
         raise SystemExit(f'PyInstaller failed for {exe_name}')
-    if game:
+    if game and host.MAC:
+        out = install_mac_game(exe_name)
+    elif game:
         shutil.copy2(CHANGELOG, os.path.join(GAME_DIST, exe_name, 'changelog.txt'))
         out = install_game(exe_name)
     else:
-        out = os.path.join(RUN, exe_name + '.exe')
-    print(f'    {out}  ({os.path.getsize(out) / 1e6:.0f} MB, '
-          f'{time.perf_counter() - t0:.0f}s)')
+        out = os.path.join(RUN, exe_name + ('.exe' if host.WINDOWS else ''))
+    size = (sum(os.lstat(os.path.join(dp, f)).st_size       # lstat: a bundle's links once
+                for dp, _d, fs in os.walk(out) for f in fs)
+            if os.path.isdir(out) else os.path.getsize(out))
+    print(f'    {out}  ({size / 1e6:.0f} MB, {time.perf_counter() - t0:.0f}s)')
     return out
 
 
@@ -255,6 +307,44 @@ def install_game(exe_name: str) -> str:
     if os.path.exists(exe + '.old'):
         os.remove(exe + '.old')
     return exe
+
+
+def _finalize_mac_app(bundle: str) -> None:
+    """Stamp the version on the bundle and seal it again.
+
+    PyInstaller writes ``0.0.0`` for both version keys.  Changing Info.plist
+    breaks the ad-hoc signature PyInstaller sealed the bundle with, and a Mac
+    refuses a downloaded app whose seal is broken ("damaged"), so the bundle
+    is signed again, ad hoc, afterwards.
+    """
+    info = os.path.join(bundle, 'Contents', 'Info.plist')
+    if not os.path.isfile(info):
+        raise SystemExit(f'not a .app bundle: {bundle}')
+    with open(info, 'rb') as fh:
+        plist = plistlib.load(fh)
+    plist['CFBundleIdentifier'] = BUNDLE_ID
+    plist['CFBundleShortVersionString'] = bundle_version()
+    plist['CFBundleVersion'] = bundle_version()
+    plist['CFBundleGetInfoString'] = f'Papa Sangre II, {version()}'
+    plist['NSHumanReadableCopyright'] = 'Papa Sangre II by Somethin\' Else; the port is MIT'
+    with open(info, 'wb') as fh:
+        plistlib.dump(plist, fh, sort_keys=True)
+    subprocess.run(['codesign', '--force', '--deep', '--sign', '-', bundle],
+                   check=True, capture_output=True)
+
+
+def install_mac_game(exe_name: str) -> str:
+    """Put the .app into RUN beside the changelog (the player's data is in
+    ~/Library/Application Support, so nothing in RUN is theirs to keep)."""
+    built = os.path.join(GAME_DIST, exe_name + '.app')
+    _finalize_mac_app(built)
+    app = os.path.join(RUN, exe_name + '.app')
+    if os.path.isdir(app):
+        shutil.rmtree(app)
+    # symlinks=True: the bundle's Frameworks point into Resources
+    shutil.copytree(built, app, symlinks=True)
+    shutil.copy2(CHANGELOG, os.path.join(RUN, 'changelog.txt'))
+    return app
 
 
 def main() -> int:
